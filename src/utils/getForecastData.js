@@ -19,12 +19,10 @@ const getHistoryForecast = (url, setArr) => {
             // console.log(data.forecast.forecastday[0].date_epoch)
             setArr((arr) => [
                 ...arr,
-                
-                    {
+                {
                     id: data.forecast.forecastday[0].date_epoch,
                     data: data.forecast.forecastday[0].date,
-                    }
-                
+                }
             ]);
         })
         .catch((error) => console.log(error.message))
