@@ -18,7 +18,7 @@ const getLast7Days = (currentDay, daysNR) => {
     const d = currentDay.getDate();
 
     for (let i = 1; i < daysNR + 1; i++) {
-        const convertedDate = `${y}-${m < 10 ? `0${m}` : m}-${d < 10 ? `0${d}` : d}`;
+        const convertedDate = `${y}-${m < 10 ? `0${m}` : m}-${d < 10 ? `0${d - i}` : d - i}`;
         lastDaysArr.push(convertedDate);
     }
     return lastDaysArr;

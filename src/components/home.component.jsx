@@ -3,7 +3,7 @@ import FutureForecast from './futureForecast.component';
 import PastForecast from './pastForecast.component';
 
 // Utils
-import { getForecast } from '../utils/getForecastData';
+import { getForecast, getHistoryForecast } from '../utils/getForecastData';
 import { getCurrentDate, getConvertedDate, getLast7Days } from '../utils/getDates';
 import { useEffect, useState } from 'react';
 
@@ -15,10 +15,7 @@ const Home = ({secretKey}) => {
 	const [location, setLocation] = useState('');
 	const [locationTemperature, setLocationTemperature] = useState('');
 	const [futureDaysArr, setFutureDaysArr] = useState([]);
-	// eslint-disable-next-line
 	const [pastDaysArr, setPastDaysArr] = useState([]);
-	const haha = getCurrentDate();
-	console.log(LAST_7_DAYS)
 
 	useEffect(() => {
 		getForecast(
@@ -27,8 +24,19 @@ const Home = ({secretKey}) => {
 			setLocationTemperature,
 			setFutureDaysArr
 		);
+
+		for (let day of LAST_7_DAYS) {
+			getHistoryForecast(
+				`http://api.weatherapi.com/v1/history.json?key=e27450645f1348d6b79132152230703&q=Sibiu&dt=${day}`,
+				setPastDaysArr
+			)
+		}
+
 	// eslint-disable-next-line
-	}, [])
+	}, [setPastDaysArr]);
+
+	// console.log(pastDaysArr)
+	// console.log(pastDaysArr[0]?.data)
 
 	return (
 		<div>
@@ -37,12 +45,10 @@ const Home = ({secretKey}) => {
 				futureDaysArr={futureDaysArr}
 			/>
 			<PastForecast
-				pastDaysArr={pastDaysArr}
 				currentDate={CURRENT_DATE}
 				last7Days={LAST_7_DAYS}
+				pastDaysArr={pastDaysArr}
 			/>
-			<p>current date: {CURRENT_DATE}</p>
-			<p>last 7 days: {LAST_7_DAYS}</p>
 		</div>
 	);
 };
