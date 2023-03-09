@@ -6,6 +6,7 @@ import SearchBar from './searchBar.component';
 // Utils
 import { getForecast, getHistoryForecast } from '../utils/getForecastData';
 import { getCurrentDate, getConvertedDate, getLast7Days } from '../utils/getDates';
+import { getDayName } from '../utils/getDayName';
 import { useEffect, useState } from 'react';
 
 const Home = ({secretKey}) => {
@@ -70,11 +71,13 @@ const Home = ({secretKey}) => {
 			/>
 			<FutureForecast
 				futureDaysArr={futureDaysArr}
+				getDayName={getDayName}
 			/>
 			<PastForecast
 				currentDate={CURRENT_DATE}
 				last7Days={LAST_7_DAYS}
 				pastDaysArr={pastDaysArr}
+				getDayName={getDayName}
 			/>
 		</div>
 	);

@@ -1,4 +1,4 @@
-const PastForecast = ({currentDate, last7Days, pastDaysArr}) => {
+const PastForecast = ({currentDate, last7Days, pastDaysArr, getDayName}) => {
     return (
         <div>
             {
@@ -10,7 +10,7 @@ const PastForecast = ({currentDate, last7Days, pastDaysArr}) => {
 					.sort((a, b) => a.id - b.id)
 					.map((item, index) => {
 						return (
-							<p key={index}>{item.data}</p>
+							<p key={index}>{getDayName(item.data, 'en-US')}</p>
 						);
 					})
 			}

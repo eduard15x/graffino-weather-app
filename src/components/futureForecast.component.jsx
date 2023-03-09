@@ -1,4 +1,4 @@
-const FutureForecast = ({futureDaysArr}) => {
+const FutureForecast = ({futureDaysArr, getDayName}) => {
     return (
         <div>
             <ul>
@@ -7,7 +7,7 @@ const FutureForecast = ({futureDaysArr}) => {
                         .map((item, index ) => {
                             return (
                                 <li key={index}>
-                                    <h3>{ item.date }</h3>
+                                    <h3>{ getDayName(item.date, 'en-US') }</h3>
                                     <p>{ item.day.avgtemp_c } ℃</p>
                                 </li>
                             )
