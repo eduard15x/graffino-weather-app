@@ -1,4 +1,4 @@
-const getData = (url, setLocation, setLocationTemperature, setLocationFutureForecast) => {
+const getForecast = (url, setLocation, setLocationTemperature, setLocationFutureForecast) => {
     fetch(url)
         .then((response) => response.json())
         .then((data) => {
@@ -9,8 +9,13 @@ const getData = (url, setLocation, setLocationTemperature, setLocationFutureFore
         })
         .catch((error) => console.log(error.message))
         .finally(() => console.log('this executes last'));
-}
+};
+
+const getHistoryForecast = (url) => {
+
+};
 
 module.exports = {
-    getData,
+    getForecast,
+    getHistoryForecast
 };
