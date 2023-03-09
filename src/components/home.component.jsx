@@ -15,11 +15,32 @@ const Home = ({secretKey}) => {
 
 	// states
 	const [cityName, setCityName] = useState('');
-	const [title, setTitle] = useState('');
+	const [title, setTitle] = useState(cityName);
+
 	const [location, setLocation] = useState('');
 	const [locationTemperature, setLocationTemperature] = useState('');
 	const [futureDaysArr, setFutureDaysArr] = useState([]);
 	const [pastDaysArr, setPastDaysArr] = useState([]);
+
+	// handlers
+	const requestData = () => {
+		// fetch data for current location
+		// get data for current day and the next 5 days
+		getForecast(
+			`http://api.weatherapi.com/v1/forecast.json?key=${secretKey}&q=Sibiu&days=6&aqi=no&alerts=no`,
+			setLocation,
+			setLocationTemperature,
+			setFutureDaysArr,
+		);
+
+		// get data for the last 7 days
+		for (let day of LAST_7_DAYS) {
+			getHistoryForecast(
+				`http://api.weatherapi.com/v1/history.json?key=e27450645f1348d6b79132152230703&q=Sibiu&dt=${day}`,
+				setPastDaysArr,
+			)
+		}
+	};
 
 	const handleInputChange = (e) => {
 		setCityName(e.target.value);
@@ -27,25 +48,11 @@ const Home = ({secretKey}) => {
 
 	const handleClick = () => {
 		setTitle(cityName);
-	}
+		requestData();
+	};
 
 	useEffect(() => {
-		// fetch data for current location
-		// get data for current day and the next 5 days
-		getForecast(
-			`http://api.weatherapi.com/v1/forecast.json?key=${secretKey}&q=Sibiu&days=6&aqi=no&alerts=no`,
-			setLocation,
-			setLocationTemperature,
-			setFutureDaysArr
-		);
-
-		// get data for the last 7 days
-		for (let day of LAST_7_DAYS) {
-			getHistoryForecast(
-				`http://api.weatherapi.com/v1/history.json?key=e27450645f1348d6b79132152230703&q=Sibiu&dt=${day}`,
-				setPastDaysArr
-			)
-		}
+		requestData();
 	// eslint-disable-next-line
 	}, []);
 

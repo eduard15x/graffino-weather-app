@@ -1,4 +1,4 @@
-const SearchBar = ({cityName, handleClick, handleInputChange}) => {
+const SearchBar = ({cityName, handleInputChange, handleClick }) => {
     return(
         <div>
             <input type="text" placeholder="Search city" value={cityName} onChange={handleInputChange}/>
