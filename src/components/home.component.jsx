@@ -5,24 +5,21 @@ import SearchBar from './searchBar.component';
 
 // Utils
 import { getForecast, getHistoryForecast } from '../utils/getForecastData';
-import { getCurrentDate, getConvertedDate, getLast7Days } from '../utils/getDates';
+import { getCurrentDate, getConvertedDate, getLastDays } from '../utils/getDates';
 import { getDayName } from '../utils/getDayName';
 import { useEffect, useState } from 'react';
 
 const Home = ({secretKey}) => {
 	// fixed variables
 	const CURRENT_DATE = getConvertedDate(getCurrentDate());
-	const LAST_7_DAYS = getLast7Days(getCurrentDate(), 7);
-
+	const LAST_7_DAYS = getLastDays(getCurrentDate(), 7);
 	// states
 	const [cityName, setCityName] = useState('');
 	const [title, setTitle] = useState(cityName);
-
 	const [location, setLocation] = useState('');
 	const [locationTemperature, setLocationTemperature] = useState('');
 	const [futureDaysArr, setFutureDaysArr] = useState([]);
 	const [pastDaysArr, setPastDaysArr] = useState([]);
-
 	// handlers
 	const requestData = () => {
 		// fetch data for current location
@@ -56,9 +53,6 @@ const Home = ({secretKey}) => {
 		requestData();
 	// eslint-disable-next-line
 	}, []);
-
-	// console.log(pastDaysArr)
-	// console.log(pastDaysArr[0]?.data)
 
 	return (
 		<div>

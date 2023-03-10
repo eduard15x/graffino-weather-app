@@ -2,21 +2,18 @@ const getForecast = (url, setLocation, setLocationTemperature, setLocationFuture
     fetch(url)
         .then((response) => response.json())
         .then((data) => {
-            // console.log(data);
             setLocation(data.location.name);
             setLocationTemperature(data.forecast.forecastday[0].day.avgtemp_c);
             setLocationFutureForecast(data.forecast.forecastday);
         })
         .catch((error) => console.log(error.message))
-        // .finally(() => console.log('this executes last'));
+        .finally(() => console.log('this will execute last'));
 };
 
 const getHistoryForecast = (url, setArr) => {
     fetch(url)
         .then((response) => response.json())
         .then((data) => {
-            // console.log(data)
-            // console.log(data.forecast.forecastday[0].date_epoch)
             setArr((arr) => [
                 ...arr,
                 {
@@ -26,7 +23,7 @@ const getHistoryForecast = (url, setArr) => {
             ]);
         })
         .catch((error) => console.log(error.message))
-        // .finally(() => console.log('last exec'));
+        .finally(() => console.log('this will execute last'));
 };
 
 module.exports = {

@@ -3,7 +3,8 @@ const FutureForecast = ({futureDaysArr, getDayName}) => {
         <div>
             <ul>
                 {
-                    futureDaysArr.filter((item, index) => index > 0)
+                    futureDaysArr
+                        .filter((item, index) => index > 0)
                         .map((item, index ) => {
                             return (
                                 <li key={index}>

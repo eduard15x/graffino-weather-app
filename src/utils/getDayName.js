@@ -1,6 +1,6 @@
-const getDayName = (dateStr, locale) => {
-    let date = new Date(dateStr);
-    return date.toLocaleDateString(locale, { weekday: 'long' });
+const getDayName = (dateString, localeLanguage) => {
+    let date = new Date(dateString);
+    return date.toLocaleDateString(localeLanguage, { weekday: 'long' });
 };
 
 module.exports = {
