@@ -5,6 +5,8 @@
 @import './styles/currentLocationDetails';
 @import './styles/futureForecast';
 @import './styles/pastForecast';
+@import './styles/searchBar';
+@import './styles/settingsMenu';
 
 * {
 	box-sizing: border-box;
@@ -23,7 +25,18 @@ body {
 	background-size: cover;
 }
 
-
 .App {
 	padding: 0px 6%;
+}
+
+.d-block {
+	display: block;
+}
+
+.d-none {
+	display: none;
+}
+
+.d-flex {
+	display: flex;
 }

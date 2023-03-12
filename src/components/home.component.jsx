@@ -4,10 +4,12 @@ import { useEffect, useState } from 'react';
 import CurrentLocationDetails from './currentLocationDetails.component';
 import FutureForecast from './futureForecast.component';
 import PastForecast from './pastForecast.component';
+import SettingsMenu from './settingsMenu.components';
 import SearchBar from './searchBar.component';
 // Utils
 import { getCurrentLocation } from '../utils/getCurrentLocation';
 import { getForecast, getHistoryForecast } from '../utils/getForecastData';
+// eslint-disable-next-line
 import { getCurrentDate, getConvertedDate, getLastDays } from '../utils/getDates';
 import { getDayName } from '../utils/getDayName';
 
@@ -23,6 +25,7 @@ const Home = ({secretKey}) => {
 		});
 
 	const CURRENT_DATE = getCurrentDate();
+	// const CURRENT_DATE_CONVERTED = getConvertedDate(getCurrentDate());
 	const LAST_7_DAYS = getLastDays(getCurrentDate(), 7);
 	// states
 	const [inputValue, setInputValue] = useState('');
@@ -31,6 +34,8 @@ const Home = ({secretKey}) => {
 	const [pastDaysArr, setPastDaysArr] = useState([]);
 	const [isCurrentLocationSet, setIsCurrentLocation] = useState(false);
 	const [isSearchButtonClicked, setIsSearchButtonClicked] = useState(false);
+	//
+    const [isSearchBarVisible, setIsSearchBarVisible] = useState(false);
 
 	// handlers
 	const requestData = () => {
@@ -66,6 +71,26 @@ const Home = ({secretKey}) => {
 		}
 	};
 
+	const handleSearchBarVisibility = (e) => {
+		// if (e.target.className.baseVal === 'search-bar-container__icon') {
+		// 	setIsSearchBarVisible(true);
+		// 	console.log(e.target + 'true')
+		// 	return;
+		// } else if (e.target.className !== 'searchbar__input') {
+		// 	setIsSearchBarVisible(false);
+		// 	console.log(e.target.className + 'false');
+		// }
+		console.log(e.target)
+		if (e.target.className.baseVal === 'search-bar-container__icon ' || e.target.className === 'search-bar-container__icon ') {
+			setIsSearchBarVisible(true);
+			console.log(e.target.className + 'tru');
+		} else if (e.target.className !== 'searchbar__input') {
+			setIsSearchBarVisible(false);
+			console.log(e.target.className + 'false');
+		}
+	};
+
+
 	useEffect(() => {
 		if (!isCurrentLocationSet) {
 			// get current browser's location if it wasn't set already
@@ -79,18 +104,20 @@ const Home = ({secretKey}) => {
 		}
 
 	// eslint-disable-next-line
-	}, [isGeolocationAvailable, isGeolocationEnabled, coords, isSearchButtonClicked]);
+	}, [isGeolocationAvailable, isGeolocationEnabled, coords, isSearchButtonClicked, isSearchBarVisible]);
 
-	console.log(CURRENT_DATE.toDateString())
 	return (
-		<div>
+		<div onClick={handleSearchBarVisibility}>
+			<SettingsMenu />
+			<SearchBar
+				inputValue={inputValue}
+				handleClick={handleClick}
+				handleInputChange={handleInputChange}
+				isSearchBarVisible={isSearchBarVisible}
+			/>
 			<CurrentLocationDetails
 				currentDate={CURRENT_DATE}
 				currentForecast={currentForecast}
-			/>
-			<SearchBar
-				handleClick={handleClick}
-				handleInputChange={handleInputChange}
 			/>
 			<FutureForecast
 				futureDaysArr={currentForecast.nextDaysArray}

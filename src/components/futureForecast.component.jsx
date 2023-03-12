@@ -9,6 +9,7 @@ const FutureForecast = ({futureDaysArr, getDayName}) => {
                         .filter((item, index) => index > 0)
                         .map((item, index ) => {
                             return (
+                                // eslint-disable-next-line
                                 <li className="forecast-list__item" key={index}>
                                     <p className="forecast-list__item--heading">{ getDayName(item.date, 'en-US') }</p>
 									<img className="forecast-list__item--icon" src={ item.day.condition.icon } alt={ item.day.condition.text + ' icon' } />
