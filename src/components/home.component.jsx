@@ -22,7 +22,7 @@ const Home = ({secretKey}) => {
 			watchPosition: true
 		});
 
-	// const CURRENT_DATE = getConvertedDate(getCurrentDate());
+	const CURRENT_DATE = getCurrentDate();
 	const LAST_7_DAYS = getLastDays(getCurrentDate(), 7);
 	// states
 	const [inputValue, setInputValue] = useState('');
@@ -80,9 +80,12 @@ const Home = ({secretKey}) => {
 
 	// eslint-disable-next-line
 	}, [isGeolocationAvailable, isGeolocationEnabled, coords, isSearchButtonClicked]);
+
+	console.log(CURRENT_DATE.toDateString())
 	return (
 		<div>
 			<CurrentLocationDetails
+				currentDate={CURRENT_DATE}
 				currentForecast={currentForecast}
 			/>
 			<SearchBar

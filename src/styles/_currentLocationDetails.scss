@@ -19,18 +19,17 @@
 
         &__group {
             display: flex;
-            align-items: end;
-            padding: 0px 10px;
+            align-items: flex-end;
+            padding: 0px 8px;
 
             &--icon {
-                width: 300px;
+                width: 280px;
                 height: 200px;
             }
 
             .group-temp {
-                width: 100px;
                 padding-bottom: 30px;
-                margin-left: 30px;
+                margin-left: 50px;
                 &--value {
                     font-size: 60px;
                 }
@@ -47,16 +46,15 @@
             }
 
             .group-units {
-                width: 40px;
                 padding-bottom: 40px;
-                margin-left: 30px;
+                margin-left: 50px;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 font-size: 24px;
 
                 span {
-                    padding: 15px 0px;
+                    padding: 12px 0px;
                 }
             }
 
@@ -116,5 +114,91 @@
     .astro-info {
         width: 20%;
         order: 3;
+        height: 260px;
+        background: rgba(217, 217, 217, 0.3);
+        border-radius: 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+
+        &:hover {
+            background: rgba(235, 235, 235, 0.7);
+        }
+
+        &:hover .astro-info__circle {
+            background: #bebebe;
+        }
+
+        &__circle {
+            position: relative;
+            width: 135px;
+            height: 135px;
+            background: #e4e4e4;
+            border-radius: 50%;
+
+            &--bullets {
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(0, 0, 0, 0.23);
+            }
+
+            .b-large {
+                width: 36px;
+                height: 36px;
+                top: 25px;
+                left: 25px;
+            }
+
+            .b-medium {
+                width: 24px;
+                height: 21px;
+                top: 110px;
+                left: 65px;
+            }
+
+            .b-small {
+                width: 12px;
+                height: 12px;
+
+                &--first {
+                    top: 15px;
+                    left: 55px;
+                }
+
+                &--second {
+                    top: 70px;
+                    left: 15px;
+                }
+
+                &--third {
+                    top: 105px;
+                    left: 95px;
+                }
+            }
+        }
+
+        &__heading {
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 19px;
+            padding-top: 20px;
+            padding-bottom: 5px;
+        }
+
+        &__moonphase {
+            padding-bottom: 10px;
+        }
+
+        &__visibility {
+            padding-bottom: 10px;
+        }
+
+        &__distance {
+            color: #000000;
+        }
     }
 }
+
+

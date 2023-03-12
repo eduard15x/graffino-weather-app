@@ -20,17 +20,17 @@ const getForecast = (url, currentForecast) => {
                 lowestTemperature: data.forecast.forecastday[0].day.mintemp_c,
                 moonPhase: data.forecast.forecastday[0].astro.moon_phase,
                 nextDaysArray: data.forecast.forecastday,
+                distance: data.forecast.forecastday[0].day.avgvis_km,
             });
         })
         .catch((error) => console.log(error.message))
-        // .finally(() => console.log('this will execute last'));
+        .finally(() => console.log('this will execute last'));
 };
 
 const getHistoryForecast = (url, setArr) => {
     fetch(url)
         .then((response) => response.json())
         .then((data) => {
-            // console.log(data)
             setArr((arr) => [
                 ...arr,
                 {
@@ -45,7 +45,7 @@ const getHistoryForecast = (url, setArr) => {
             ]);
         })
         .catch((error) => console.log(error.message))
-        // .finally(() => console.log('this will execute last'));
+        .finally(() => console.log('this will execute last'));
 };
 
 module.exports = {

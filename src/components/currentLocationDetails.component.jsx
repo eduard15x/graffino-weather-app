@@ -1,4 +1,4 @@
-const CurrentLocationDetails = ({currentForecast}) => {
+const CurrentLocationDetails = ({ currentDate, currentForecast }) => {
     return (
         <div className="current-location-details-container">
             <div className="weather-info">
@@ -26,7 +26,7 @@ const CurrentLocationDetails = ({currentForecast}) => {
             <div className="additional-info-list">
                 <div className="additional-info-list__item">
                     <p className="additional-info-list__item--heading">Air Quality</p>
-                    <p className="additional-info-list__item--value">{ currentForecast.airQuality }</p>
+                    <p className="additional-info-list__item--value">{ Math.round(currentForecast.airQuality) }</p>
                     <p className="additional-info-list__item--detail">Good</p>
                 </div>
                 <div className="additional-info-list__item">
@@ -69,11 +69,17 @@ const CurrentLocationDetails = ({currentForecast}) => {
             </div>
 
             <div className="astro-info">
-                <img />
-                <p>June</p>
-                <p>Phase</p>
-                <p>Visibility</p>
-                <p>Distance</p>
+                <div className="astro-info__circle">
+                    <div className="astro-info__circle--bullets b-large"></div>
+                    <div className="astro-info__circle--bullets b-medium"></div>
+                    <div className="astro-info__circle--bullets b-small b-small--first"></div>
+                    <div className="astro-info__circle--bullets b-small b-small--second"></div>
+                    <div className="astro-info__circle--bullets b-small b-small--third"></div>
+                </div>
+                <p className="astro-info__heading">{ currentDate.toLocaleString('default', {month: 'long', day: 'numeric', year: 'numeric'}) }</p>
+                <p className="astro-info__moonphase">Phase: <span>{ currentForecast.moonPhase }</span></p>
+                <p className="astro-info__visibility">Visibility: <span>{ currentForecast.visibility }</span></p>
+                <p className="astro-info__distance">Distance: <span>{ currentForecast.distance }</span></p>
             </div>
         </div>
     )
