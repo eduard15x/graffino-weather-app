@@ -1,7 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200&display=swap');
 @import './styles/variables';
 @import './styles/mixins';
+@import './styles/global';
 
+// Components
+@import './styles/loaderSpinner';
 @import './styles/currentLocationDetails';
 @import './styles/futureForecast';
 @import './styles/pastForecast';
@@ -23,20 +26,5 @@ body {
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-}
-
-.App {
-	padding: 0px 6%;
-}
-
-.d-block {
-	display: block;
-}
-
-.d-none {
-	display: none;
-}
-
-.d-flex {
-	display: flex;
+	padding: 0px 5%;
 }

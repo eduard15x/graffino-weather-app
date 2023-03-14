@@ -9,7 +9,7 @@ const getConvertedDate = (currentDay) => {
     const day = currentDay.getDate();
     const convertedDate = `${year}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}`;
     return convertedDate;
-}
+};
 
 const getLastDays = (currentDay, daysNumber) => {
     const lastDaysArr = [];

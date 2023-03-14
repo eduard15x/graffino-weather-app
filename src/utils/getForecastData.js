@@ -2,7 +2,6 @@ const getForecast = (url, currentForecast) => {
     fetch(url)
         .then((response) => response.json())
         .then((data) => {
-            console.log(data)
             currentForecast({
                 cityName: data.location.name,
                 date: data.forecast.forecastday[0].date,
@@ -23,8 +22,7 @@ const getForecast = (url, currentForecast) => {
                 distance: data.forecast.forecastday[0].day.avgvis_km,
             });
         })
-        .catch((error) => console.log(error.message))
-        .finally(() => console.log('this will execute last'));
+        .catch((error) => console.log(error.message));
 };
 
 const getHistoryForecast = (url, setArr) => {
@@ -44,8 +42,7 @@ const getHistoryForecast = (url, setArr) => {
                 }
             ]);
         })
-        .catch((error) => console.log(error.message))
-        .finally(() => console.log('this will execute last'));
+        .catch((error) => console.log(error.message));
 };
 
 module.exports = {

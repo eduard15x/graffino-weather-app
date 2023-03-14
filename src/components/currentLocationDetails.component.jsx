@@ -26,7 +26,7 @@ const CurrentLocationDetails = ({ currentDate, currentForecast }) => {
             <div className="additional-info-list">
                 <div className="additional-info-list__item">
                     <p className="additional-info-list__item--heading">Air Quality</p>
-                    <p className="additional-info-list__item--value">{ Math.round(currentForecast.airQuality) }</p>
+                    <p className="additional-info-list__item--value">{ isNaN(Math.round(currentForecast.airQuality)) ? '' : Math.round(currentForecast.airQuality) }</p>
                     <p className="additional-info-list__item--detail">Good</p>
                 </div>
                 <div className="additional-info-list__item">

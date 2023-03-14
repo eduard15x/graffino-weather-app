@@ -1,5 +1,32 @@
+// TODO: Add more variables for colors, fonts, etc. and integrate this variables in each file in the project
+
 $background-color: #f06292;
 $text-color: #f1d3b3;
 $btn-width: 120px;
 $btn-height: 40px;
 $block-padding: 60px;
+
+// example
+//'$color-gray-10' means '10% gray'
+$color-dim-15: rgba(0, 0, 0, .15);
+
+// Primary
+$color-brooks-blue: #005EB8;
+
+// Accent Colors
+$color-accent-blue: #1E99CB;        // cornflower
+$color-accent-pink: #EE3B6F;        // watermelon
+$color-accent-yellow: #FFF73C;      // banana
+$color-accent-green: #3CAF8C;       // mint
+
+// Secondary Colors
+$color-secondary-blue: #0866A0;     // blueberry
+
+$font-size-n: 100px;
+$font-size-h1: 42px;
+
+$spacing-none: 0;
+$spacing-tiny: 4px;
+$spacing-x-small: 12px;
+$spacing-small: 20px;
+$spacing-medium: 28px;

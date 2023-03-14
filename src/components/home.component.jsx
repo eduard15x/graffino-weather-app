@@ -6,12 +6,15 @@ import FutureForecast from './futureForecast.component';
 import PastForecast from './pastForecast.component';
 import SettingsMenu from './settingsMenu.components';
 import SearchBar from './searchBar.component';
+import LoadingSpinner from './loadingSpinner';
 // Utils
 import { getCurrentLocation } from '../utils/getCurrentLocation';
 import { getForecast, getHistoryForecast } from '../utils/getForecastData';
 // eslint-disable-next-line
 import { getCurrentDate, getConvertedDate, getLastDays } from '../utils/getDates';
 import { getDayName } from '../utils/getDayName';
+import { getCitySuggestions } from '../utils/getCitySuggestions';
+
 
 const Home = ({secretKey}) => {
 	// fixed variables
@@ -23,19 +26,19 @@ const Home = ({secretKey}) => {
 			userDecisionTimeout: 5000,
 			watchPosition: true
 		});
-
+	// Static variables
 	const CURRENT_DATE = getCurrentDate();
-	// const CURRENT_DATE_CONVERTED = getConvertedDate(getCurrentDate());
 	const LAST_7_DAYS = getLastDays(getCurrentDate(), 7);
-	// states
+	// States
 	const [inputValue, setInputValue] = useState('');
 	const [cityName, setCityName] = useState('');
 	const [currentForecast, setCurrentForecast] = useState({});
 	const [pastDaysArr, setPastDaysArr] = useState([]);
 	const [isCurrentLocationSet, setIsCurrentLocation] = useState(false);
-	const [isSearchButtonClicked, setIsSearchButtonClicked] = useState(false);
-	//
     const [isSearchBarVisible, setIsSearchBarVisible] = useState(false);
+	const [autocompleteSuggestionsArray, setAutocompleteSuggestionsArray] = useState([]);
+	// Deppendencies for side effect
+	const deppendenciesArr = [isGeolocationAvailable, isGeolocationEnabled, coords, isSearchBarVisible];
 
 	// handlers
 	const requestData = () => {
@@ -44,7 +47,6 @@ const Home = ({secretKey}) => {
 			`http://api.weatherapi.com/v1/forecast.json?key=${secretKey}&q=${cityName}&days=6&aqi=yes&alerts=no`,
 			setCurrentForecast
 		);
-
 		// get data for the last 7 days
 		for (let day of LAST_7_DAYS) {
 			getHistoryForecast(
@@ -52,44 +54,31 @@ const Home = ({secretKey}) => {
 				setPastDaysArr,
 			);
 		}
-
-		// set state for button back to false after data was requested
-		setIsSearchButtonClicked(false);
+		// set as default inputValue and setAutocompleteSuggestionsArray
+		setInputValue('');
+		setAutocompleteSuggestionsArray([]);
 	};
 
 	const handleInputChange = (e) => {
 		setInputValue(e.target.value);
+		if (inputValue.length > 0) {
+			getCitySuggestions(`http://api.weatherapi.com/v1/search.json?key=e27450645f1348d6b79132152230703&q=${inputValue}`, setAutocompleteSuggestionsArray);
+		}
 	};
 
-	const handleClick = () => {
-		setCityName(inputValue);
+	const handleClick = (e) => {
+		setCityName(e.target.getAttribute('data-city-coords'));
 		setPastDaysArr([]);
-		setIsSearchButtonClicked(true);
-
-		if (isSearchButtonClicked) {
-			requestData();
-		}
+		requestData();
 	};
 
 	const handleSearchBarVisibility = (e) => {
-		// if (e.target.className.baseVal === 'search-bar-container__icon') {
-		// 	setIsSearchBarVisible(true);
-		// 	console.log(e.target + 'true')
-		// 	return;
-		// } else if (e.target.className !== 'searchbar__input') {
-		// 	setIsSearchBarVisible(false);
-		// 	console.log(e.target.className + 'false');
-		// }
-		console.log(e.target)
 		if (e.target.className.baseVal === 'search-bar-container__icon ' || e.target.className === 'search-bar-container__icon ') {
 			setIsSearchBarVisible(true);
-			console.log(e.target.className + 'tru');
 		} else if (e.target.className !== 'searchbar__input') {
 			setIsSearchBarVisible(false);
-			console.log(e.target.className + 'false');
 		}
 	};
-
 
 	useEffect(() => {
 		if (!isCurrentLocationSet) {
@@ -104,31 +93,38 @@ const Home = ({secretKey}) => {
 		}
 
 	// eslint-disable-next-line
-	}, [isGeolocationAvailable, isGeolocationEnabled, coords, isSearchButtonClicked, isSearchBarVisible]);
+	}, deppendenciesArr);
 
-	return (
-		<div onClick={handleSearchBarVisibility}>
-			<SettingsMenu />
-			<SearchBar
-				inputValue={inputValue}
-				handleClick={handleClick}
-				handleInputChange={handleInputChange}
-				isSearchBarVisible={isSearchBarVisible}
-			/>
-			<CurrentLocationDetails
-				currentDate={CURRENT_DATE}
-				currentForecast={currentForecast}
-			/>
-			<FutureForecast
-				futureDaysArr={currentForecast.nextDaysArray}
-				getDayName={getDayName}
-			/>
-			<PastForecast
-				pastDaysArr={pastDaysArr}
-				getDayName={getDayName}
-			/>
-		</div>
-	);
+	if (currentForecast.cityName !== undefined) {
+		return (
+			<div onClick={handleSearchBarVisibility}>
+				<SettingsMenu />
+				<SearchBar
+					inputValue={inputValue}
+					handleClick={handleClick}
+					handleInputChange={handleInputChange}
+					isSearchBarVisible={isSearchBarVisible}
+					autocompleteSuggestionsArray={autocompleteSuggestionsArray}
+				/>
+				<CurrentLocationDetails
+					currentDate={CURRENT_DATE}
+					currentForecast={currentForecast}
+				/>
+				<FutureForecast
+					futureDaysArr={currentForecast.nextDaysArray}
+					getDayName={getDayName}
+				/>
+				<PastForecast
+					pastDaysArr={pastDaysArr}
+					getDayName={getDayName}
+				/>
+			</div>
+		);
+	} else {
+		return (
+			<LoadingSpinner />
+		);
+	}
 };
 
 export default Home;

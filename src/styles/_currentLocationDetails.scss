@@ -1,7 +1,7 @@
 .current-location-details-container {
     display: flex;
-    margin-top: 70px;
-    margin-bottom: 55px;
+    margin-top: 55px;
+    margin-bottom: 35px;
     justify-content: space-between;
     height: 270px;
 
@@ -11,10 +11,7 @@
         width: 50%;
 
         &--heading {
-            font-size: 64px;
-            font-weight: 200;
-            line-height: 77px;
-            margin-bottom: 10px;
+            font-size: 50px;
         }
 
         &__group {
@@ -23,12 +20,13 @@
             padding: 0px 8px;
 
             &--icon {
-                width: 280px;
+                width: 200px;
                 height: 200px;
+                scale: 1.5;
             }
 
             .group-temp {
-                padding-bottom: 30px;
+                padding-bottom: 50px;
                 margin-left: 50px;
                 &--value {
                     font-size: 60px;
@@ -46,7 +44,7 @@
             }
 
             .group-units {
-                padding-bottom: 40px;
+                padding-bottom: 60px;
                 margin-left: 50px;
                 display: flex;
                 flex-direction: column;
@@ -59,7 +57,7 @@
             }
 
             .group-limits {
-                padding-bottom: 70px;
+                padding-bottom: 90px;
                 margin-left: 30px;
                 display: flex;
                 flex-direction: column;

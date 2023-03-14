@@ -1,4 +1,4 @@
-const FutureForecast = ({futureDaysArr, getDayName}) => {
+const FutureForecast = ({ futureDaysArr, getDayName }) => {
     return (
         <div className="future-forecast-container">
             <h2 className="future-forecast-container__heading">5 days forecast</h2>
@@ -10,7 +10,7 @@ const FutureForecast = ({futureDaysArr, getDayName}) => {
                         .map((item, index ) => {
                             return (
                                 // eslint-disable-next-line
-                                <li className="forecast-list__item" key={index}>
+                                <li className="forecast-list__item" key={ index }>
                                     <p className="forecast-list__item--heading">{ getDayName(item.date, 'en-US') }</p>
 									<img className="forecast-list__item--icon" src={ item.day.condition.icon } alt={ item.day.condition.text + ' icon' } />
 									<p className="forecast-list__item--temperature">
@@ -19,11 +19,11 @@ const FutureForecast = ({futureDaysArr, getDayName}) => {
 									</p>
 									<p className="forecast-list__item--condition">{ item.day.condition.text }</p>
                                 </li>
-                            )
+                            );
                         })
                 }
             </ul>
-            : 'NO DATA IN ARRAY'
+            : 'No data available'
             }
         </div>
     );

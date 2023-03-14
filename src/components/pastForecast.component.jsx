@@ -8,11 +8,11 @@ const PastForecast = ({pastDaysArr, getDayName}) => {
 					// Ascending sort the array
 					// Map through the array and return the data
 					pastDaysArr
-						.filter((obj, index, self) => index === self.findIndex(element => element.id === obj.id))
+						.filter((obj, index, self) => index === self.findIndex((element) => element.id === obj.id))
 						.sort((a, b) => a.id - b.id)
 						.map((item, index) => {
 							return (
-								<li className="forecast-list__item" key={index}>
+								<li className="forecast-list__item" key={ index }>
 									<p className="forecast-list__item--heading">{ getDayName(item.date, 'en-US') }</p>
 									<img className="forecast-list__item--icon" src={ item.icon } alt={ item.description + ' icon' } />
 									<p className="forecast-list__item--temperature">
