@@ -1,22 +1,31 @@
-const PastForecast = ({currentDate, last7Days, pastDaysArr, getDayName}) => {
+const PastForecast = ({pastDaysArr, getDayName}) => {
     return (
-        <div>
-            {
-				// Remove duplicate objects after fetching the data
-				// Ascending sort the array
-				// Map through the array and return the data
-				pastDaysArr
-                    .filter((obj, index, self) => index === self.findIndex(element => element.id === obj.id))
-					.sort((a, b) => a.id - b.id)
-					.map((item, index) => {
-						return (
-							<li key={index}>
-								<p>{getDayName(item.data, 'en-US')}</p>
-							</li>
-						);
-					})
-			}
-        </div>
+		<div className="history-forecast-container">
+			<h2 className="history-forecast-container__heading">Last 7 days</h2>
+			<ul className="forecast-list">
+				{
+					// Remove duplicate objects after fetching the data
+					// Ascending sort the array
+					// Map through the array and return the data
+					pastDaysArr
+						.filter((obj, index, self) => index === self.findIndex((element) => element.id === obj.id))
+						.sort((a, b) => a.id - b.id)
+						.map((item, index) => {
+							return (
+								<li className="forecast-list__item" key={ index }>
+									<p className="forecast-list__item--heading">{ getDayName(item.date, 'en-US') }</p>
+									<img className="forecast-list__item--icon" src={ item.icon } alt={ item.description + ' icon' } />
+									<p className="forecast-list__item--temperature">
+										<span>H:{ Math.round(item.highestTemperature) }° </span>
+										<span>L:{ Math.round(item.lowestTemperature) }°</span>
+									</p>
+									<p className="forecast-list__item--condition">{ item.description }</p>
+								</li>
+							);
+						})
+				}
+			</ul>
+		</div>
     );
 };
 

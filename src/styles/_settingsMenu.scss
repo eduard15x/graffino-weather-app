@@ -1,0 +1,19 @@
+.settings-menu-container {
+    &__icon {
+        position: fixed;
+        top: 20px;
+        left: 30px;
+        color: #D9D9D9;
+        font-size: 36px;
+        cursor: pointer;
+
+        &:hover {
+            color: #fafafa;
+        }
+
+        &:active {
+            margin-top: 3px;
+            margin-left: 3px;
+        }
+    }
+}

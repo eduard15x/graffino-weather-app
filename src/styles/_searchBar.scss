@@ -1,0 +1,123 @@
+.search-bar-container {
+    &__icon {
+        position: fixed;
+        top: 20px;
+        left: 100px;
+        color: #c2c2c2;
+        font-size: 36px;
+        cursor: pointer;
+
+        &:hover {
+            color: #fafafa;
+        }
+
+        &:active {
+            margin-top: 3px;
+            margin-left: 3px;
+        }
+    }
+
+    .searchbar {
+        position: fixed;
+        flex-direction: column;
+        top: 20px;
+        left: 100px;
+        width: 330px;
+        transition: all 0.2s ease;
+
+        &__input {
+            font-size: 22px;
+            padding: 5px;
+            width: 330px;
+            background: transparent;
+            border: none;
+            color: #292929;
+            font-weight: bold;
+            border-bottom: 2px solid #535353;
+            border-bottom-right-radius: -25px;
+
+            &:focus-visible {
+                outline: none;
+            }
+        }
+
+        &__button {
+            position: absolute;
+            right: 30px;
+            width: 35px;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            height: 38px;
+
+            &__icon--search {
+                color: #9b9b9b;
+                width: 22px;
+                height: 100%;
+
+                &:hover {
+                    color: #fafafa;
+                }
+
+                &:active {
+                    margin-top: 2px;
+                }
+            }
+
+            &__icon--close {
+                position: absolute;
+                right: 5px;
+                width: 22px;
+                height: 38px;
+                color: #9b9b9b;
+                cursor: pointer;
+
+                &:hover {
+                    color: #fafafa;
+                }
+
+                &:active {
+                    margin-top: 2px;
+                }
+            }
+        }
+
+        .autocomplete-list {
+            background: #fafafa;
+            max-height: 175px;
+            overflow-y: auto;
+            border: 1px solid black;
+            border-top: none;
+
+            &::-webkit-scrollbar {
+                width: 15px;
+            }
+
+            &::-webkit-scrollbar-track {
+                background-color: white;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background-color: #9b9b9b;
+                border: 3px solid #fafafa;
+                border-radius: 10px;
+
+                &:hover {
+                    background-color: #5a5a5a;
+                }
+            }
+
+            &__item {
+                font-size: 18px;
+                font-weight: bold;
+                padding: 7px;
+                cursor: default;
+               border-bottom: 1px solid rgb(238, 238, 238);
+
+                &:hover {
+                    background-color: #c0c0c0;
+                }
+            }
+        }
+    }
+}

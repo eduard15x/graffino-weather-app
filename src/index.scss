@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200&display=swap');
+@import './styles/variables';
+@import './styles/mixins';
+@import './styles/global';
+
+// Components
+@import './styles/loaderSpinner';
+@import './styles/currentLocationDetails';
+@import './styles/futureForecast';
+@import './styles/pastForecast';
+@import './styles/searchBar';
+@import './styles/settingsMenu';
+
+* {
+	box-sizing: border-box;
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+	text-decoration: none;
+	font-family: 'Inter', sans-serif;
+}
+
+body {
+	background: url('./assets/background.png') no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	padding: 0px 5%;
+}
