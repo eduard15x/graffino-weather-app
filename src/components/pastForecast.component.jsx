@@ -1,4 +1,4 @@
-const PastForecast = ({pastDaysArr, getDayName}) => {
+const PastForecast = ({ userSettings, pastDaysArr, getDayName }) => {
     return (
 		<div className="history-forecast-container">
 			<h2 className="history-forecast-container__heading">Last 7 days</h2>
@@ -16,8 +16,8 @@ const PastForecast = ({pastDaysArr, getDayName}) => {
 									<p className="forecast-list__item--heading">{ getDayName(item.date, 'en-US') }</p>
 									<img className="forecast-list__item--icon" src={ item.icon } alt={ item.description + ' icon' } />
 									<p className="forecast-list__item--temperature">
-										<span>H:{ Math.round(item.highestTemperature) }° </span>
-										<span>L:{ Math.round(item.lowestTemperature) }°</span>
+										<span>H:{ userSettings.temperature ? Math.round(item.highestTemperatureC) : Math.round(item.highestTemperatureF) }° </span>
+										<span>L:{ userSettings.temperature ? Math.round(item.lowestTemperatureC) : Math.round(item.lowestTemperatureF) }°</span>
 									</p>
 									<p className="forecast-list__item--condition">{ item.description }</p>
 								</li>
