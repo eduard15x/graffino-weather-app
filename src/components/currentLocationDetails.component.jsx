@@ -5,18 +5,19 @@ const CurrentLocationDetails = ({ userSettings, currentDate, currentForecast }) 
         <div className="current-location-details-container">
             <div className="weather-info">
 			    <h1 className="weather-info--heading">{currentForecast.cityName}, {currentForecast.countryName}</h1>
+
                 <div className="weather-info__group">
                     <img className="weather-info__group--icon" src={ currentForecast.icon } alt="Weather icon"/>
                     <div className="group-temp">
-                       <p className="group-temp--value">{ userSettings.temperature ? Math.round(currentForecast.temperatureC) : Math.round(currentForecast.temperatureF) }°</p>
+                        <p className="group-temp--value">{ userSettings.temperature ? Math.round(currentForecast.temperatureC) : Math.round(currentForecast.temperatureF) }°</p>
                         <p className="group-temp--text">
                             Feels like: <br />
-                            <span className="group-temp--span">{ userSettings.temperature ? Math.round(currentForecast.feelsLikeC) : Math.round(currentForecast.feelsLikeF) }°</span>
+                            { userSettings.temperature ? Math.round(currentForecast.feelsLikeC) : Math.round(currentForecast.feelsLikeF) }°
                         </p>
                     </div>
                     <p className="group-units">
-                        <span className={ userSettings.temperature ? 'bold' : '' }>F</span>
-                        <span className={ !userSettings.temperature ? 'bold' : '' }>C</span>
+                        <span className={ userSettings.temperature ? 'bold' : '' }>°F</span>
+                        <span className={ !userSettings.temperature ? 'bold' : '' }>°C</span>
                     </p>
                     <p className="group-limits">
                         <span>H: { userSettings.temperature ? currentForecast.highestTemperatureC : currentForecast.highestTemperatureF }°</span>

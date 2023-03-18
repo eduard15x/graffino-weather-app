@@ -19,6 +19,8 @@ const UserSelectedSettings = ({
                                     checked={ item.unitMeasure }
                                     checkedIcon={false}
                                     uncheckedIcon={false}
+                                    offColor="#2c2c2c"
+                                    onColor="#2c2c2c"
                                 />
                                 <p className={ !item.unitMeasure ? '' : 'bold' }>{ item.unitMeasureUS }</p>
                             </div>

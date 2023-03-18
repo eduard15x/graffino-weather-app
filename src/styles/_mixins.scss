@@ -1,9 +1,4 @@
 @use 'sass:math';
-@mixin vertical-list {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
 
 // Breakpoints
 $xx-small: 320px;
@@ -17,42 +12,46 @@ $xxlarge: 1600px;
 
 @mixin breakpoint($point) {
     // for xlarge desktop layouts
-    @if $point == xxlarge {
+    @if $point == desktopLarge {
         @media (min-width: $xxlarge) { @content; }
     }
     // for large desktop layouts
-    @if $point == xlarge {
-        @media (min-width: $max) { @content; }
+    @if $point == desktop {
+        @media (min-width: $max - 1) { @content; }
     }
     // for regular desktop layouts
-    @if $point == large {
+    @if $point == desktopSmall {
         @media (min-width: $large) { @content; }
     }
     // for small desktop layouts
-    @if $point == desktop {
+    @if $point == middleViewport {
         @media (min-width: $mid) { @content; }
     }
     // all encompassing mobile + tablet: everything < 975px
-    @if $point == desktopDown {
-        @media (max-width: $medium) { @content; }
-    }
+    // @if $point == tablet {
+    //     @media (max-width: $medium) { @content; }
+    // }
     // tablet
     // large tablet layouts
-    @if $point == tabletLarge {
+    @if $point == tablet {
         @media (min-width: $medium) { @content; }
     }
     // regular tablet layouts
     // layouts > 768px
-    @if $point == tablet {
+    @if $point == tabletSmall {
         @media (min-width: $small) { @content; }
     }
     // all encompassing mobile: everything < 768px
-    @if $point == mobile {
-        @media (max-width: $small)  { @content; }
-    }
+    // @if $point == mobile {
+    //     @media (max-width: $small)  { @content; }
+    // }
     // for medium mobile layouts > 595px
-    @if $point == mobileLarge {
+    @if $point == mobile {
         @media (min-width: $x-small)  { @content; }
+    }
+    // for very small viewports > 320px
+    @if $point == mobileSmall {
+        @media (min-width: $xx-small)  { @content; }
     }
 
     // Orientation

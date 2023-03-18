@@ -161,7 +161,7 @@ const Home = ({secretKey}) => {
 
 	if (currentForecast.cityName !== undefined) {
 		return (
-			<div onClick={handleSearchBarVisibility}>
+			<div onClick={handleSearchBarVisibility} className="home-container">
 				<SettingsMenu
 					handleSwitchChange={handleSwitchChange}
 					temperatureUnitMeasure={temperatureUnitMeasure}
@@ -182,6 +182,7 @@ const Home = ({secretKey}) => {
 					currentForecast={currentForecast}
 				/>
 				<FutureForecast
+					userSettings={userSettings}
 					futureDaysArr={currentForecast.nextDaysArray}
 					getDayName={getDayName}
 				/>
