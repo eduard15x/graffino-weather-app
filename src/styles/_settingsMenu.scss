@@ -4,8 +4,12 @@
         top: 20px;
         left: 30px;
         color: #D9D9D9;
-        font-size: 36px;
+        font-size: 28px;
         cursor: pointer;
+
+        @include breakpoint(tabletSmall) {
+            font-size: 36px;
+        }
 
         &:hover {
             color: #fafafa;
@@ -22,18 +26,28 @@
         z-index: 10;
         top: 0px;
         left: 0px;
-        width: 480px;
+        width: 100%;
         height: 100%;
-        background-color: #777777;
+        background-color: #b4b4b4;
+
+        @include breakpoint(tabletSmall) {
+            width: 480px;
+        }
 
         &__close-icon {
             position: absolute;
             z-index: 100;
-            top: 6px;
-            right: 6px;
-            font-size: 40px;
+            top: 8px;
+            right: 8px;
+            font-size: 32px;
             color: #D9D9D9;
             cursor: pointer;
+
+            @include breakpoint(tabletSmall) {
+                top: 6px;
+                right: 6px;
+                font-size: 40px;
+            }
 
             &:hover {
                 color: #fafafa;
@@ -42,33 +56,43 @@
 
         &__heading {
             text-align: center;
-            padding: 20px 0px;
-            color: rgb(207, 207, 207);
+            padding: 16px 0px;
+            color: rgb(69, 69, 69);
+            font-size: 18px;
+
+            @include breakpoint(tabletSmall) {
+                padding: 20px 0px;
+                font-size: 24px;
+            }
         }
 
         &__list {
             height: auto;
-            max-height: 350px;
+            max-height: 300px;
             overflow-y: auto;
             width: 100%;
             border-bottom: 2px solid black;
             border-top: 2px solid black;
 
-            &::-webkit-scrollbar {
-                width: 15px;
-            }
+            @include breakpoint(tabletSmall) {
+                max-height: 350px;
 
-            &::-webkit-scrollbar-track {
-                background-color: rgb(83, 83, 83);
-            }
+                &::-webkit-scrollbar {
+                    width: 15px;
+                }
 
-            &::-webkit-scrollbar-thumb {
-                background-color: rgb(49, 49, 49);
-                border: 1px solid #fafafa;
-                border-radius: 10px;
+                &::-webkit-scrollbar-track {
+                    background-color: rgb(126, 126, 126);
+                }
 
-                &:hover {
-                    background-color: #5a5a5a;
+                &::-webkit-scrollbar-thumb {
+                    background-color: rgb(71, 71, 71);
+                    border: 1px solid #fafafa;
+                    border-radius: 10px;
+
+                    &:hover {
+                        background-color: #5a5a5a;
+                    }
                 }
             }
 
@@ -76,9 +100,18 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding: 10px;
+                padding: 10px 5%;
                 border-bottom: 1px solid rgb(80, 80, 80);
-                font-size: 18px;
+                font-size: 15px;
+
+                @include breakpoint(mobile) {
+                    padding: 10px 15%;
+                }
+
+                @include breakpoint(tabletSmall) {
+                    padding: 10px 5%;
+                    font-size: 18px;
+                }
 
                 &:last-child {
                     border-bottom: none;
@@ -93,8 +126,31 @@
                     }
                 }
 
+                img {
+                    @include breakpoint(tabletSmall) {
+                        margin-right: 15px;
+                    }
+                }
+
                 .item-last {
                     text-align: end;
+                    margin-left: 10px;
+                    &__extremes {
+                        display: flex;
+                        flex-direction: column;
+
+                        @include breakpoint(tabletSmall) {
+                            flex-direction: row;
+                        }
+                    }
+
+                    &--comma {
+                        display: none;
+
+                        @include breakpoint(tabletSmall) {
+                            display: block;
+                        }
+                    }
                 }
 
                 &:hover {
@@ -107,7 +163,15 @@
         .user-settings-list {
             display: flex;
             flex-wrap: wrap;
-            padding: 10px 25px;
+            padding: 10px 15px;
+
+            @include breakpoint(mobileCustom) {
+                padding: 10px 45px;
+            }
+
+            @include breakpoint(tabletSmall) {
+                padding: 10px 25px;
+            }
 
             &__item {
                 width: 50%;
@@ -115,7 +179,11 @@
                 flex-direction: column;
                 align-items: center;
                 padding-bottom: 20px;
-                font-size: 18px;
+                font-size: 14px;
+
+                @include breakpoint(tabletSmall) {
+                    font-size: 18px;
+                }
 
                 &--toggle {
                     display: flex;

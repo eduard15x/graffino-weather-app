@@ -55,17 +55,18 @@
                 justify-content: space-between;
                 padding: 0px;
                 padding-top: 40px;
-                padding-left: 10%;
+                padding-left: 14%;
                 padding-right: 5%;
             }
 
             @include breakpoint(middleViewport) {
                 padding-right: 0%;
+                padding-left: 10%;
             }
 
             &--icon {
                 width: 100px;
-                scale: 1;
+                scale: 0.9;
 
                 @include breakpoint(mobile) {
                     width: 125px;
@@ -77,10 +78,13 @@
 
                 @include breakpoint(middleViewport) {
                     width: 200px;
-                    scale: 1.2;
                 }
 
                 @include breakpoint(desktopSmall) {
+                    scale: 1.2;
+                }
+                
+                @include breakpoint(desktop) {
                     scale: 1.4;
                 }
 
@@ -102,7 +106,7 @@
                     }
 
                     @include breakpoint(tablet) {
-                        font-size: 70px;
+                        font-size: 62px;
                     }
                 }
                 &--text {
@@ -121,7 +125,7 @@
                 font-size: 20px;
 
                 @include breakpoint(tablet) {
-                    font-size: 24px;
+                    font-size: 22px;
                 }
             }
 

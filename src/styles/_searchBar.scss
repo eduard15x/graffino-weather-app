@@ -2,10 +2,16 @@
     &__icon {
         position: fixed;
         top: 20px;
-        left: 100px;
-        color: #c2c2c2;
-        font-size: 36px;
+        left: 75px;
+        color: #7e7e7e;
+        font-size: 28px;
         cursor: pointer;
+
+        @include breakpoint(tabletSmall) {
+            font-size: 36px;
+            left: 90px;
+            color: #c2c2c2;
+        }
 
         &:hover {
             color: #fafafa;
@@ -19,26 +25,46 @@
 
     .searchbar {
         position: fixed;
+        z-index: 999;
         flex-direction: column;
-        top: 20px;
-        left: 100px;
-        width: 330px;
+        top: 0px;
+        left: 0px;
+        width: 100%;
         transition: all 0.2s ease;
+
+        @include breakpoint(mobileCustom) {
+            width: 300px;
+            top: 20px;
+            left: 75px;
+        }
+
+        @include breakpoint(tabletSmall) {
+            left: 100px;
+        }
 
         &__input {
             font-size: 22px;
             padding: 5px;
-            width: 330px;
-            background: transparent;
+            width: 100%;
+            background: whitesmoke;
             border: none;
             color: #292929;
             font-weight: bold;
             border-bottom: 2px solid #535353;
             border-bottom-right-radius: -25px;
 
+            @include breakpoint(mobileCustom) {
+                width: 300px;
+            }
+
+            @include breakpoint(mobile) {
+                background: transparent;
+            }
+
             &:focus-visible {
                 outline: none;
             }
+
         }
 
         &__button {
@@ -112,7 +138,7 @@
                 font-weight: bold;
                 padding: 7px;
                 cursor: default;
-               border-bottom: 1px solid rgb(238, 238, 238);
+                border-bottom: 1px solid rgb(238, 238, 238);
 
                 &:hover {
                     background-color: #c0c0c0;

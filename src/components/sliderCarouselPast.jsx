@@ -15,11 +15,11 @@ const SliderCarouselPast = ({ userSettings, daysArray, getDayName }) => {
 		>
             {
 					// Remove duplicate objects after fetching the data
-					// Ascending sort the array
+					// Descending sort the array
 					// Map through the array and return the data
 					daysArray
 						.filter((obj, index, self) => index === self.findIndex((element) => element.id === obj.id))
-						.sort((a, b) => a.id - b.id)
+						.sort((a, b) => b.id - a.id)
 						.map((item, index) => {
 							return (
 								<li className="forecast-list__item" key={ index }>

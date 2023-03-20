@@ -2,6 +2,7 @@
 
 // Breakpoints
 $xx-small: 320px;
+$x-small-custom: 440px;
 $x-small: 595px;
 $small:   768px;
 $x-medium: 840px;
@@ -53,6 +54,10 @@ $x-medium: 860px;
     // for medium mobile layouts > 595px
     @if $point == mobile {
         @media (min-width: $x-small)  { @content; }
+    }
+    // for medium mobile layouts > 440px
+    @if $point == mobileCustom {
+        @media (min-width: $x-small-custom)  { @content; }
     }
     // for very small viewports > 320px
     @if $point == mobileSmall {
