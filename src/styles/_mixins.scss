@@ -4,11 +4,13 @@
 $xx-small: 320px;
 $x-small: 595px;
 $small:   768px;
+$x-medium: 840px;
 $medium:  975px;
 $mid:     1080px;
 $large:   1280px;
 $max:     1440px;
 $xxlarge: 1600px;
+$x-medium: 860px;
 
 @mixin breakpoint($point) {
     // for xlarge desktop layouts
@@ -26,6 +28,9 @@ $xxlarge: 1600px;
     // for small desktop layouts
     @if $point == middleViewport {
         @media (min-width: $mid) { @content; }
+    }// for small desktop layouts
+    @if $point == customBreakpointCarousel {
+        @media (min-width: $x-medium) { @content; }
     }
     // all encompassing mobile + tablet: everything < 975px
     // @if $point == tablet {

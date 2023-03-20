@@ -1,9 +1,11 @@
+import SliderCarouselFuture from "./sliderCarouselFuture";
+
 const FutureForecast = ({ userSettings, futureDaysArr, getDayName }) => {
     return (
         <div className="future-forecast-container">
             <h2 className="future-forecast-container__heading">5 days forecast</h2>
             {futureDaysArr ?
-            <ul className="forecast-list">
+            <ul className="forecast-list forecast-list-largeview">
                 {
                     futureDaysArr
                         .filter((item, index) => index > 0)
@@ -25,6 +27,11 @@ const FutureForecast = ({ userSettings, futureDaysArr, getDayName }) => {
             </ul>
             : 'No data available'
             }
+            <SliderCarouselFuture
+                userSettings={userSettings}
+                daysArray={futureDaysArr}
+                getDayName={getDayName}
+            />
         </div>
     );
 };
