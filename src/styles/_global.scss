@@ -9,3 +9,35 @@
 .d-flex {
 	display: flex;
 }
+
+
+.custom {
+	color: red;
+	font-weight: bold;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+
+.home-container {
+	width: 100%;
+	margin: 20px auto;
+	position: relative;
+	// background-color: red;
+
+	@include breakpoint(desktopSmall) {
+		margin: 0px auto;
+		margin-bottom: 20px;
+	}
+
+	@include breakpoint(tablet) {
+		max-width: 1440px;
+		padding: 0px 35px;
+	}
+
+	@include breakpoint(desktop) {
+		margin-bottom: 0px;
+	}
+}

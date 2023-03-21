@@ -1,17 +1,25 @@
-import SliderCarouselPast from './sliderCarouselPast';
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
-const PastForecast = ({ userSettings, pastDaysArr, getDayName }) => {
+const SliderCarouselPast = ({ userSettings, daysArray, getDayName }) => {
     return (
-		<div className="history-forecast-container">
-			<h2 className="history-forecast-container__heading">Last 7 days</h2>
-			<ul className="forecast-list forecast-list-largeview">
-				{
+        <Carousel
+			className="forecast-list-smallview"
+			showThumbs={false}
+			autoPlay={false}
+            swipeable={true}
+            emulateTouch={true}
+			showStatus={false}
+			showArrows={false}
+			infiniteLoop={true}
+		>
+            {
 					// Remove duplicate objects after fetching the data
-					// Ascending sort the array
+					// Descending sort the array
 					// Map through the array and return the data
-					pastDaysArr
+					daysArray
 						.filter((obj, index, self) => index === self.findIndex((element) => element.id === obj.id))
-						.sort((a, b) => a.id - b.id)
+						.sort((a, b) => b.id - a.id)
 						.map((item, index) => {
 							return (
 								<li className="forecast-list__item" key={ index }>
@@ -26,14 +34,8 @@ const PastForecast = ({ userSettings, pastDaysArr, getDayName }) => {
 							);
 						})
 				}
-			</ul>
-			<SliderCarouselPast
-                userSettings={userSettings}
-                daysArray={pastDaysArr}
-                getDayName={getDayName}
-			/>
-		</div>
+        </Carousel>
     );
 };
 
-export default PastForecast;
+export default SliderCarouselPast;
