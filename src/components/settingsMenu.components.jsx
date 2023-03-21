@@ -4,7 +4,14 @@ import { MdClose } from "react-icons/md";
 import UserSelectedSettings from './userSelectedSettings';
 
 
-const SettingsMenu = ({isSettingsMenuVisibile, handleSwitchChange, temperatureUnitMeasure, setTemperatureUnitMeasure, unitMeasuresSwitchArray}) => {
+const SettingsMenu = ({
+    isSettingsMenuVisibile,
+    handleSwitchChange,
+    temperatureUnitMeasure,
+    setTemperatureUnitMeasure,
+    unitMeasuresSwitchArray,
+    currentForecastLocalStorage
+}) => {
 
     const [isChecked, setIsChecked] = useState(false);
 
@@ -23,64 +30,34 @@ const SettingsMenu = ({isSettingsMenuVisibile, handleSwitchChange, temperatureUn
                 <MdClose className='menu-container__close-icon' />
                 <h2 className='menu-container__heading'>Saved Searches</h2>
                 <ul className='menu-container__list'>
-                    <li className='menu-container__list--item'>
-                        <div>
-                            <h3>City name, Country name</h3>
-                            <p>Status</p>
-                        </div>
-                        <p>IMAGE</p>
-                        <div className='item-last'>
-                            <p>13C</p>
-                            <p>h:8C, l: -2C</p>
-                        </div>
-                    </li>
-                    <li className='menu-container__list--item'>
-                        <div>
-                            <h3>Iasi, Romania</h3>
-                            <p>Status</p>
-                        </div>
-                        <p>IMAGE</p>
-                        <div className='item-last'>
-                            <p>13C</p>
-                            <p>h:8C, l: -2C</p>
-                        </div>
-                    </li>
-                    <li className='menu-container__list--item'>
-                        <div>
-                            <h3>New Orleans, United States of America</h3>
-                            <p>Status</p>
-                        </div>
-                        <p>IMAGE</p>
-                        <div className='item-last'>
-                            <p>13C</p>
-                            <p>h:8C, l: -2C</p>
-                        </div>
-                    </li>
-                    <li className='menu-container__list--item'>
-                        <div>
-                            <h3>Iasi, Romania</h3>
-                            <p>Status</p>
-                        </div>
-                        <p>IMAGE</p>
-                        <div className='item-last'>
-                            <p>13C</p>
-                            <p>h:8C, l: -2C</p>
-                        </div>
-                    </li>
-                    <li className='menu-container__list--item'>
-                        <div>
-                            <h3>New Orleans, United States of America</h3>
-                            <p>Status</p>
-                        </div>
-                        <p>IMAGE</p>
-                        <div className='item-last'>
-                            <p>13C</p>
-                            <p>h:8C, l: -2C</p>
-                        </div>
-                    </li>
+
+                    {
+                        currentForecastLocalStorage.length > 0
+                        ? currentForecastLocalStorage
+                            .filter((obj, index, self) => index === self.findIndex((element) => element.cityName === obj.cityName))
+                            .map((item, index) => {
+                            return (
+                                <li className='menu-container__list--item' key={index}>
+                                    <div>
+                                        <h3>{ item.cityName }, {item.countryName}</h3>
+                                        <p>{item.status}</p>
+                                    </div>
+                                    <img src={`${item.icon}`} alt={`${item.status}`} />
+                                    <div className='item-last'>
+                                        <p>{item.temperatureC}</p>
+                                        <p className='item-last__extremes'>
+                                            <span>H:{item.highestTemperatureC}</span>
+                                            <span className='item-last--comma'>,</span>
+                                            <span>L:{item.lowestTemperatureC}</span>
+                                        </p>
+                                    </div>
+                                </li>
+                            )
+                        })
+                        : 'No data'
+                    }
                 </ul>
 
-                
                 <h2 className='menu-container__heading'>User settings</h2>
                 <UserSelectedSettings
                     temperatureUnitMeasure={temperatureUnitMeasure}

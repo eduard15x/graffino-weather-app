@@ -34,6 +34,30 @@ const getForecast = (url, currentForecast) => {
         .catch((error) => console.log(error.message));
 };
 
+const getForecastLocalStorage = (url, setArray) => {
+    fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+            setArray((arr) => [
+                ...arr,
+                {
+                    cityName: data.location.name,
+                    date: data.forecast.forecastday[0].date,
+                    countryName: data.location.country,
+                    temperatureC: data.current.temp_c,
+                    temperatureF: data.current.temp_f,
+                    icon: data.forecast.forecastday[0].day.condition.icon,
+                    highestTemperatureC: data.forecast.forecastday[0].day.maxtemp_c,
+                    highestTemperatureF: data.forecast.forecastday[0].day.maxtemp_f,
+                    lowestTemperatureC: data.forecast.forecastday[0].day.mintemp_c,
+                    lowestTemperatureF: data.forecast.forecastday[0].day.mintemp_f,
+                    status: data.forecast.forecastday[0].day.condition.text,
+                }
+            ]);
+        })
+        .catch((error) => console.log(error.message));
+};
+
 const getHistoryForecast = (url, setArr) => {
     fetch(url)
         .then((response) => response.json())
@@ -58,5 +82,6 @@ const getHistoryForecast = (url, setArr) => {
 
 module.exports = {
     getForecast,
+    getForecastLocalStorage,
     getHistoryForecast
 };

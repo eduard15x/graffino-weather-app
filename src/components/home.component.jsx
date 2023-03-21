@@ -9,7 +9,7 @@ import SearchBar from './searchBar.component';
 import LoadingSpinner from './loadingSpinner';
 // Utils
 import { getCurrentLocation } from '../utils/getCurrentLocation';
-import { getForecast, getHistoryForecast } from '../utils/getForecastData';
+import { getForecast, getForecastLocalStorage, getHistoryForecast } from '../utils/getForecastData';
 // eslint-disable-next-line
 import { getCurrentDate, getConvertedDate, getLastDays } from '../utils/getDates';
 import { getDayName } from '../utils/getDayName';
@@ -44,8 +44,12 @@ const Home = ({secretKey}) => {
 	const [windUnitMeasure, setWindUnitMeasure] = useState(true);
 	const [pressureUnitMeasure, setPressureUnitMeasure] = useState(true);
 	const [visibilityUnitMeasure, setVisibilityUnitMeasure] = useState(true);
+	//
+	const localStorageHistory = JSON.parse(localStorage.getItem('historyArray'));
+	const [localStorageArray, setLocalStorageArray] = useState(localStorageHistory ?  localStorageHistory : []);
+	const [currentForecastLocalStorage, setCurrentForecastLocalStorage] = useState(localStorageArray);
 	// Deppendencies for side effect
-	const deppendenciesArr = [isGeolocationAvailable, isGeolocationEnabled, coords, isSearchBarVisible];
+	const deppendenciesArr = [isGeolocationAvailable, isGeolocationEnabled, coords, isSearchBarVisible, isSettingsMenuVisibile, localStorageArray, currentForecastLocalStorage];
 
 	// handlers
 	const requestData = () => {
@@ -77,6 +81,14 @@ const Home = ({secretKey}) => {
 		setCityName(e.target.getAttribute('data-city-coords'));
 		setPastDaysArr([]);
 		requestData();
+		console.log(e.target.getAttribute('data-city-coords'));
+		if (localStorageArray.length > 6) {
+			localStorageArray.shift();
+			setLocalStorageArray([...localStorageArray, e.target.getAttribute('data-city-coords')]);
+		} else {
+			setLocalStorageArray([...localStorageArray, e.target.getAttribute('data-city-coords')]);
+			requestDataLocalStorage();
+		}
 	};
 
 	const handleSearchBarVisibility = (e) => {
@@ -97,6 +109,15 @@ const Home = ({secretKey}) => {
 		setState(currentState ? false : true);
 	};
 
+	const requestDataLocalStorage = () => {
+		for (let location of localStorageArray) {
+			getForecastLocalStorage(
+				`http://api.weatherapi.com/v1/forecast.json?key=${secretKey}&q=${location}&days=1&aqi=yes&alerts=no`,
+				setCurrentForecastLocalStorage
+			);
+		}
+	};
+
 	useEffect(() => {
 		if (!isCurrentLocationSet) {
 			// get current browser's location if it wasn't set already
@@ -108,10 +129,8 @@ const Home = ({secretKey}) => {
 		} else {
 			requestData();
 		}
-
 	// eslint-disable-next-line
 	}, deppendenciesArr);
-
 
 	const unitMeasuresSwitchArray = [
 		{
@@ -159,6 +178,8 @@ const Home = ({secretKey}) => {
 		visibility: visibilityUnitMeasure
 	};
 
+	console.log(currentForecastLocalStorage)
+
 	if (currentForecast.cityName !== undefined) {
 		return (
 			<div onClick={handleSearchBarVisibility} className="home-container">
@@ -168,6 +189,7 @@ const Home = ({secretKey}) => {
 					setTemperatureUnitMeasure={setTemperatureUnitMeasure}
 					unitMeasuresSwitchArray={unitMeasuresSwitchArray}
 					isSettingsMenuVisibile={isSettingsMenuVisibile}
+					currentForecastLocalStorage={currentForecastLocalStorage}
 				/>
 				<SearchBar
 					inputValue={inputValue}
@@ -175,6 +197,7 @@ const Home = ({secretKey}) => {
 					handleInputChange={handleInputChange}
 					isSearchBarVisible={isSearchBarVisible}
 					autocompleteSuggestionsArray={autocompleteSuggestionsArray}
+					localStorageArray={localStorageArray}
 				/>
 				<CurrentLocationDetails
 					userSettings={userSettings}
