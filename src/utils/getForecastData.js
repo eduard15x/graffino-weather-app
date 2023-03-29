@@ -1,4 +1,4 @@
-const getForecast = (url, currentForecast) => {
+const getForecast = (url, currentForecast, setLoading) => {
     fetch(url)
         .then((response) => response.json())
         .then((data) => {
@@ -30,6 +30,7 @@ const getForecast = (url, currentForecast) => {
                 distanceKM: data.forecast.forecastday[0].day.avgvis_km,
                 distanceMILES: data.forecast.forecastday[0].day.avgvis_miles,
             });
+            setLoading(true);
         })
         .catch((error) => console.log(error.message));
 };
@@ -58,7 +59,7 @@ const getForecastLocalStorage = (url, setArray) => {
         .catch((error) => console.log(error.message));
 };
 
-const getHistoryForecast = (url, setArr) => {
+const getHistoryForecast = (url, setArr, setLoading) => {
     fetch(url)
         .then((response) => response.json())
         .then((data) => {
@@ -76,6 +77,7 @@ const getHistoryForecast = (url, setArr) => {
                     description: data.forecast.forecastday[0].day.condition.text,
                 }
             ]);
+            setLoading(true);
         })
         .catch((error) => console.log(error.message));
 };

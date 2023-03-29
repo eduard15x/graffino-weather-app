@@ -14,6 +14,7 @@ const SliderCarouselFuture = ({ userSettings, daysArray, getDayName }) => {
 			infiniteLoop={true}
         >
             {
+                daysArray ?
                 daysArray
                     .filter((item, index) => index > 0)
                     .map((item, index ) => {
@@ -30,6 +31,7 @@ const SliderCarouselFuture = ({ userSettings, daysArray, getDayName }) => {
                             </li>
                         );
                     })
+                : ''
             }
         </Carousel>
     );

@@ -7,6 +7,7 @@ const UserSelectedSettings = ({
     return (
         <div className="user-settings-list">
             {
+                unitMeasuresSwitchArray ?
                 unitMeasuresSwitchArray.map((item, index) => {
                     return (
                         <div key={ index } className="user-settings-list__item">
@@ -27,6 +28,7 @@ const UserSelectedSettings = ({
                         </div>
                     )
                 })
+                : ''
             }
         </div>
     )

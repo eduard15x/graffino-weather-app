@@ -17,6 +17,7 @@ const SliderCarouselPast = ({ userSettings, daysArray, getDayName }) => {
 					// Remove duplicate objects after fetching the data
 					// Descending sort the array
 					// Map through the array and return the data
+					daysArray ?
 					daysArray
 						.filter((obj, index, self) => index === self.findIndex((element) => element.id === obj.id))
 						.sort((a, b) => b.id - a.id)
@@ -33,6 +34,7 @@ const SliderCarouselPast = ({ userSettings, daysArray, getDayName }) => {
 								</li>
 							);
 						})
+					: ''
 				}
         </Carousel>
     );

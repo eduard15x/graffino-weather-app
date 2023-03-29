@@ -16,8 +16,8 @@ const FutureForecast = ({ userSettings, futureDaysArr, getDayName }) => {
                                     <p className="forecast-list__item--heading">{ getDayName(item.date, 'en-US') }</p>
 									<img className="forecast-list__item--icon" src={ item.day.condition.icon } alt={ item.day.condition.text + ' icon' } />
 									<p className="forecast-list__item--temperature">
-										<span>H:{ userSettings.temperature ? Math.round(item.day.maxtemp_c) : Math.round(item.day.maxtemp_f) }° </span>
-										<span>L:{ userSettings.temperature ? Math.round(item.day.mintemp_c) : Math.round(item.day.mintemp_f) }°</span>
+										<span>H:{ !userSettings.temperature ? Math.round(item.day.maxtemp_c) : Math.round(item.day.maxtemp_f) }° </span>
+										<span>L:{ !userSettings.temperature ? Math.round(item.day.mintemp_c) : Math.round(item.day.mintemp_f) }°</span>
 									</p>
 									<p className="forecast-list__item--condition">{ item.day.condition.text }</p>
                                 </li>
@@ -25,7 +25,7 @@ const FutureForecast = ({ userSettings, futureDaysArr, getDayName }) => {
                         })
                 }
             </ul>
-            : 'No data available'
+            : ''
             }
             <SliderCarouselFuture
                 userSettings={userSettings}

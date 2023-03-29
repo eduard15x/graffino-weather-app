@@ -30,31 +30,30 @@ const SettingsMenu = ({
                 <MdClose className='menu-container__close-icon' />
                 <h2 className='menu-container__heading'>Saved Searches</h2>
                 <ul className='menu-container__list'>
-
                     {
                         currentForecastLocalStorage.length > 0
                         ? currentForecastLocalStorage
                             .filter((obj, index, self) => index === self.findIndex((element) => element.cityName === obj.cityName))
                             .map((item, index) => {
-                            return (
-                                <li className='menu-container__list--item' key={index}>
-                                    <div>
-                                        <h3>{ item.cityName }, {item.countryName}</h3>
-                                        <p>{item.status}</p>
-                                    </div>
-                                    <img src={`${item.icon}`} alt={`${item.status}`} />
-                                    <div className='item-last'>
-                                        <p>{item.temperatureC}</p>
-                                        <p className='item-last__extremes'>
-                                            <span>H:{item.highestTemperatureC}</span>
-                                            <span className='item-last--comma'>,</span>
-                                            <span>L:{item.lowestTemperatureC}</span>
-                                        </p>
-                                    </div>
-                                </li>
-                            )
-                        })
-                        : 'No data'
+                                return (
+                                    <li className='menu-container__list--item' key={index}>
+                                        <div>
+                                            <h3>{ item.cityName }, {item.countryName}</h3>
+                                            <p>{item.status}</p>
+                                        </div>
+                                        <img src={`${item.icon}`} alt={`${item.status}`} />
+                                        <div className='item-last'>
+                                            <p>{item.temperatureC}°</p>
+                                            <p className='item-last__extremes'>
+                                                <span>H:{item.highestTemperatureC}°</span>
+                                                <span className='item-last--comma'>,</span>
+                                                <span>L:{item.lowestTemperatureC}°</span>
+                                            </p>
+                                        </div>
+                                    </li>
+                                )
+                            })
+                        : 'No saved searches'
                     }
                 </ul>
 
@@ -66,7 +65,6 @@ const SettingsMenu = ({
                     isChecked={isChecked}
                     unitMeasuresSwitchArray={unitMeasuresSwitchArray}
                 />
-                <p>{ isChecked ? 'chekedd' : 'falsed'}</p>
             </div>
         </div>
     )

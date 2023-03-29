@@ -44,25 +44,27 @@ const Home = ({secretKey}) => {
 	const [windUnitMeasure, setWindUnitMeasure] = useState(true);
 	const [pressureUnitMeasure, setPressureUnitMeasure] = useState(true);
 	const [visibilityUnitMeasure, setVisibilityUnitMeasure] = useState(true);
-	//
-	const localStorageHistory = JSON.parse(localStorage.getItem('historyArray'));
-	const [localStorageArray, setLocalStorageArray] = useState(localStorageHistory ?  localStorageHistory : []);
-	const [currentForecastLocalStorage, setCurrentForecastLocalStorage] = useState(localStorageArray);
-	// Deppendencies for side effect
-	const deppendenciesArr = [isGeolocationAvailable, isGeolocationEnabled, coords, isSearchBarVisible, isSettingsMenuVisibile, localStorageArray, currentForecastLocalStorage];
+	// localStorage
+	const historyArray = JSON.parse(localStorage.getItem('historyArray'));
+	const [localStorageArray, setLocalStorageArray] = useState(historyArray !== null ? historyArray : []);
+	const [currentForecastLocalStorage, setCurrentForecastLocalStorage] = useState([]);
+	// spinner state
+	const [isLoading, setIsLoading] = useState(false);
 
-	// handlers
 	const requestData = () => {
+		setIsLoading(false);
 		// get data for current day and the next 5 days
 		getForecast(
 			`http://api.weatherapi.com/v1/forecast.json?key=${secretKey}&q=${cityName}&days=6&aqi=yes&alerts=no`,
-			setCurrentForecast
+			setCurrentForecast,
+			setIsLoading
 		);
 		// get data for the last 7 days
 		for (let day of LAST_7_DAYS) {
 			getHistoryForecast(
 				`http://api.weatherapi.com/v1/history.json?key=${secretKey}&q=${cityName}&dt=${day}`,
 				setPastDaysArr,
+				setIsLoading
 			);
 		}
 		// set as default inputValue and setAutocompleteSuggestionsArray
@@ -81,15 +83,16 @@ const Home = ({secretKey}) => {
 		setCityName(e.target.getAttribute('data-city-coords'));
 		setPastDaysArr([]);
 		requestData();
-		console.log(e.target.getAttribute('data-city-coords'));
-		if (localStorageArray.length > 6) {
-			localStorageArray.shift();
-			setLocalStorageArray([...localStorageArray, e.target.getAttribute('data-city-coords')]);
+
+		if (historyArray.length > 6) {
+			historyArray.shift();
+			setLocalStorageArray([...historyArray, e.target.getAttribute('data-city-coords')]);
 		} else {
-			setLocalStorageArray([...localStorageArray, e.target.getAttribute('data-city-coords')]);
-			requestDataLocalStorage();
+			setLocalStorageArray([...historyArray, e.target.getAttribute('data-city-coords')]);
 		}
+		requestDataLocalStorage();
 	};
+
 
 	const handleSearchBarVisibility = (e) => {
 		if (e.target.className.baseVal === 'search-bar-container__icon ' || e.target.className === 'search-bar-container__icon' || e.target.className === 'searchbar__input') {
@@ -125,12 +128,16 @@ const Home = ({secretKey}) => {
 
 			if (isCurrentLocationSet) {
 				requestData();
+				requestDataLocalStorage()
 			}
 		} else {
 			requestData();
+			requestDataLocalStorage()
 		}
+
+		localStorage.setItem('historyArray', JSON.stringify(localStorageArray));
 	// eslint-disable-next-line
-	}, deppendenciesArr);
+	}, [coords, localStorageArray]);
 
 	const unitMeasuresSwitchArray = [
 		{
@@ -178,48 +185,48 @@ const Home = ({secretKey}) => {
 		visibility: visibilityUnitMeasure
 	};
 
-	console.log(currentForecastLocalStorage)
-
-	if (currentForecast.cityName !== undefined) {
+	if (isLoading) {
 		return (
 			<div onClick={handleSearchBarVisibility} className="home-container">
-				<SettingsMenu
+					<SettingsMenu
 					handleSwitchChange={handleSwitchChange}
 					temperatureUnitMeasure={temperatureUnitMeasure}
 					setTemperatureUnitMeasure={setTemperatureUnitMeasure}
 					unitMeasuresSwitchArray={unitMeasuresSwitchArray}
 					isSettingsMenuVisibile={isSettingsMenuVisibile}
 					currentForecastLocalStorage={currentForecastLocalStorage}
-				/>
-				<SearchBar
-					inputValue={inputValue}
-					handleClick={handleClick}
-					handleInputChange={handleInputChange}
-					isSearchBarVisible={isSearchBarVisible}
-					autocompleteSuggestionsArray={autocompleteSuggestionsArray}
-					localStorageArray={localStorageArray}
-				/>
-				<CurrentLocationDetails
-					userSettings={userSettings}
-					currentDate={CURRENT_DATE}
-					currentForecast={currentForecast}
-				/>
-				<FutureForecast
-					userSettings={userSettings}
-					futureDaysArr={currentForecast.nextDaysArray}
-					getDayName={getDayName}
-				/>
-				<PastForecast
-					userSettings={userSettings}
-					pastDaysArr={pastDaysArr}
-					getDayName={getDayName}
-				/>
+					/>
+					<SearchBar
+						inputValue={inputValue}
+						handleClick={handleClick}
+						handleInputChange={handleInputChange}
+						isSearchBarVisible={isSearchBarVisible}
+						autocompleteSuggestionsArray={autocompleteSuggestionsArray}
+						localStorageArray={localStorageArray}
+					/>
+					<CurrentLocationDetails
+						userSettings={userSettings}
+						currentDate={CURRENT_DATE}
+						currentForecast={currentForecast}
+					/>
+					<FutureForecast
+						userSettings={userSettings}
+						futureDaysArr={currentForecast.nextDaysArray}
+						getDayName={getDayName}
+					/>
+					<PastForecast
+						userSettings={userSettings}
+						pastDaysArr={pastDaysArr}
+						getDayName={getDayName}
+					/>
 			</div>
 		);
 	} else {
 		return (
+		<div onClick={handleSearchBarVisibility} className="home-container">
 			<LoadingSpinner />
-		);
+		</div>
+		)
 	}
 };
 

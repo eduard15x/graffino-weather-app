@@ -3,16 +3,19 @@ import AirCardInfo from "./airCardInfo";
 const CurrentLocationDetails = ({ userSettings, currentDate, currentForecast }) => {
     return (
         <div className="current-location-details-container">
+
+            {
+            currentForecast.temperatureF ?
             <div className="weather-info">
 			    <h1 className="weather-info--heading">{currentForecast.cityName}, {currentForecast.countryName}</h1>
 
                 <div className="weather-info__group">
                     <img className="weather-info__group--icon" src={ currentForecast.icon } alt="Weather icon"/>
                     <div className="group-temp">
-                        <p className="group-temp--value">{ userSettings.temperature ? Math.round(currentForecast.temperatureC) : Math.round(currentForecast.temperatureF) }°</p>
+                        <p className="group-temp--value">{ !userSettings.temperature ? Math.round(currentForecast.temperatureC) : Math.round(currentForecast.temperatureF) }°</p>
                         <p className="group-temp--text">
                             Feels like: <br />
-                            { userSettings.temperature ? Math.round(currentForecast.feelsLikeC) : Math.round(currentForecast.feelsLikeF) }°
+                            { !userSettings.temperature ? Math.round(currentForecast.feelsLikeC) : Math.round(currentForecast.feelsLikeF) }°
                         </p>
                     </div>
                     <p className="group-units">
@@ -20,11 +23,13 @@ const CurrentLocationDetails = ({ userSettings, currentDate, currentForecast }) 
                         <span className={ !userSettings.temperature ? 'bold' : '' }>°C</span>
                     </p>
                     <p className="group-limits">
-                        <span>H: { userSettings.temperature ? currentForecast.highestTemperatureC : currentForecast.highestTemperatureF }°</span>
-                        <span>L: { userSettings.temperature ? currentForecast.lowestTemperatureC : currentForecast.highestTemperatureF }°</span>
+                        <span>H: { !userSettings.temperature ? currentForecast.highestTemperatureC : currentForecast.highestTemperatureF }°</span>
+                        <span>L: { !userSettings.temperature ? currentForecast.lowestTemperatureC : currentForecast.highestTemperatureF }°</span>
                     </p>
                 </div>
             </div>
+            : ''
+            }
 
             <div className="additional-info-list">
                 <AirCardInfo
