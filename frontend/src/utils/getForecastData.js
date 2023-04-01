@@ -32,7 +32,9 @@ const getForecast = (url, currentForecast, setLoading) => {
             });
             setLoading(true);
         })
-        .catch((error) => console.log(error.message));
+        .catch((error) => {
+            console.log(error.message)
+        });
 };
 
 const getForecastLocalStorage = (url, setArray) => {

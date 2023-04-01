@@ -55,14 +55,14 @@ const Home = ({secretKey}) => {
 		setIsLoading(false);
 		// get data for current day and the next 5 days
 		getForecast(
-			`http://api.weatherapi.com/v1/forecast.json?key=${secretKey}&q=${cityName}&days=6&aqi=yes&alerts=no`,
+			`http://localhost:4000/weather/forecast/${cityName}`,
 			setCurrentForecast,
 			setIsLoading
 		);
 		// get data for the last 7 days
 		for (let day of LAST_7_DAYS) {
 			getHistoryForecast(
-				`http://api.weatherapi.com/v1/history.json?key=${secretKey}&q=${cityName}&dt=${day}`,
+				`http://localhost:4000/weather/history/${cityName}/${day}`,
 				setPastDaysArr,
 				setIsLoading
 			);
@@ -75,7 +75,7 @@ const Home = ({secretKey}) => {
 	const handleInputChange = (e) => {
 		setInputValue(e.target.value);
 		if (inputValue.length > 0) {
-			getCitySuggestions(`http://api.weatherapi.com/v1/search.json?key=${secretKey}&q=${inputValue}`, setAutocompleteSuggestionsArray);
+			getCitySuggestions(`http://localhost:4000/weather/suggestion/${inputValue}`, setAutocompleteSuggestionsArray);
 		}
 	};
 
@@ -114,7 +114,7 @@ const Home = ({secretKey}) => {
 	const requestDataLocalStorage = () => {
 		for (let location of localStorageArray) {
 			getForecastLocalStorage(
-				`http://api.weatherapi.com/v1/forecast.json?key=${secretKey}&q=${location}&days=1&aqi=yes&alerts=no`,
+				`http://localhost:4000/weather/localstorage/${location}`,
 				setCurrentForecastLocalStorage
 			);
 		}
@@ -184,53 +184,55 @@ const Home = ({secretKey}) => {
 		visibility: visibilityUnitMeasure
 	};
 
-	if (isLoading && isGeolocationEnabled) {
-		return (
-			<div onClick={handleSearchBarVisibility} className="home-container">
-					<SettingsMenu
-					handleSwitchChange={handleSwitchChange}
-					temperatureUnitMeasure={temperatureUnitMeasure}
-					setTemperatureUnitMeasure={setTemperatureUnitMeasure}
-					unitMeasuresSwitchArray={unitMeasuresSwitchArray}
-					isSettingsMenuVisibile={isSettingsMenuVisibile}
-					currentForecastLocalStorage={currentForecastLocalStorage}
-					/>
-					<SearchBar
-						inputValue={inputValue}
-						handleClick={handleClick}
-						handleInputChange={handleInputChange}
-						isSearchBarVisible={isSearchBarVisible}
-						autocompleteSuggestionsArray={autocompleteSuggestionsArray}
-						localStorageArray={localStorageArray}
-					/>
-					<CurrentLocationDetails
-						userSettings={userSettings}
-						currentDate={CURRENT_DATE}
-						currentForecast={currentForecast}
-					/>
-					<FutureForecast
-						userSettings={userSettings}
-						futureDaysArr={currentForecast.nextDaysArray}
-						getDayName={getDayName}
-					/>
-					<PastForecast
-						userSettings={userSettings}
-						pastDaysArr={pastDaysArr}
-						getDayName={getDayName}
-					/>
-			</div>
-		);
-	} else if (!isGeolocationEnabled){
-		return (
-			<div onClick={handleSearchBarVisibility} className="home-container">
-				<LoadingSpinner />
-				<p className='error-message-location-not-enabled'>Location is not enabled for this browser</p>
-			</div>
-		)
+	if (isGeolocationEnabled) {
+		if (isLoading) {
+			return (
+				<div onClick={handleSearchBarVisibility} className="home-container">
+						<SettingsMenu
+						handleSwitchChange={handleSwitchChange}
+						temperatureUnitMeasure={temperatureUnitMeasure}
+						setTemperatureUnitMeasure={setTemperatureUnitMeasure}
+						unitMeasuresSwitchArray={unitMeasuresSwitchArray}
+						isSettingsMenuVisibile={isSettingsMenuVisibile}
+						currentForecastLocalStorage={currentForecastLocalStorage}
+						/>
+						<SearchBar
+							inputValue={inputValue}
+							handleClick={handleClick}
+							handleInputChange={handleInputChange}
+							isSearchBarVisible={isSearchBarVisible}
+							autocompleteSuggestionsArray={autocompleteSuggestionsArray}
+							localStorageArray={localStorageArray}
+						/>
+						<CurrentLocationDetails
+							userSettings={userSettings}
+							currentDate={CURRENT_DATE}
+							currentForecast={currentForecast}
+						/>
+						<FutureForecast
+							userSettings={userSettings}
+							futureDaysArr={currentForecast.nextDaysArray}
+							getDayName={getDayName}
+						/>
+						<PastForecast
+							userSettings={userSettings}
+							pastDaysArr={pastDaysArr}
+							getDayName={getDayName}
+						/>
+				</div>
+			);
+		} else {
+			return (
+				<div onClick={handleSearchBarVisibility} className="home-container">
+					<LoadingSpinner />
+				</div>
+			)
+		}
 	} else {
 		return (
 			<div onClick={handleSearchBarVisibility} className="home-container">
 				<LoadingSpinner />
+				<p className='error-message-location-not-enabled'>Location is not enabled for this browser</p>
 			</div>
 		)
 	}
