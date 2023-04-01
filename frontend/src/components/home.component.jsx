@@ -75,7 +75,7 @@ const Home = ({secretKey}) => {
 	const handleInputChange = (e) => {
 		setInputValue(e.target.value);
 		if (inputValue.length > 0) {
-			getCitySuggestions(`http://api.weatherapi.com/v1/search.json?key=e27450645f1348d6b79132152230703&q=${inputValue}`, setAutocompleteSuggestionsArray);
+			getCitySuggestions(`http://api.weatherapi.com/v1/search.json?key=${secretKey}&q=${inputValue}`, setAutocompleteSuggestionsArray);
 		}
 	};
 
@@ -92,7 +92,6 @@ const Home = ({secretKey}) => {
 		}
 		requestDataLocalStorage();
 	};
-
 
 	const handleSearchBarVisibility = (e) => {
 		if (e.target.className.baseVal === 'search-bar-container__icon ' || e.target.className === 'search-bar-container__icon' || e.target.className === 'searchbar__input') {
@@ -185,7 +184,7 @@ const Home = ({secretKey}) => {
 		visibility: visibilityUnitMeasure
 	};
 
-	if (isLoading) {
+	if (isLoading && isGeolocationEnabled) {
 		return (
 			<div onClick={handleSearchBarVisibility} className="home-container">
 					<SettingsMenu
@@ -221,11 +220,18 @@ const Home = ({secretKey}) => {
 					/>
 			</div>
 		);
+	} else if (!isGeolocationEnabled){
+		return (
+			<div onClick={handleSearchBarVisibility} className="home-container">
+				<LoadingSpinner />
+				<p className='error-message-location-not-enabled'>Location is not enabled for this browser</p>
+			</div>
+		)
 	} else {
 		return (
-		<div onClick={handleSearchBarVisibility} className="home-container">
-			<LoadingSpinner />
-		</div>
+			<div onClick={handleSearchBarVisibility} className="home-container">
+				<LoadingSpinner />
+			</div>
 		)
 	}
 };

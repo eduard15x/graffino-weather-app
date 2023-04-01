@@ -41,3 +41,23 @@
 		margin-bottom: 0px;
 	}
 }
+
+.error-message-location-not-enabled {
+	position: fixed;
+	top: 5%;
+	left: 50%;
+	transform: translateX(-50%);
+	text-align: center;
+	font-size: 24px;
+	color: red;
+	font-weight: bold;
+	background-color: whitesmoke;
+	padding: 12px 6px;
+	width: 90%;
+
+	@include breakpoint(tablet) {
+		font-size: 40px;
+		width: 75%;
+		padding: 12px 20px;
+	}
+}

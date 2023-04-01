@@ -18,7 +18,14 @@ const getLastDays = (currentDay, daysNumber) => {
     const day = currentDay.getDate();
 
     for (let i = 1; i < daysNumber + 1; i++) { // we set i = 1 because we don't want to render our current day
-        const convertedDate = `${year}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day - i}` : day - i}`;
+        const prevDay = new Date(year, month, day - i);
+
+        // if the month is february, we set day to be 28
+        if (prevDay.getMonth() === 2 && prevDay.getDate() > 28) {
+            prevDay.setDate(28);
+        }
+
+        const convertedDate = `${prevDay.getFullYear()}-${prevDay.getMonth() < 10 ? `0${prevDay.getMonth()}` : prevDay.getMonth()}-${prevDay.getDate() < 10 ? `0${prevDay.getDate()}` : prevDay.getDate()}`;
         lastDaysArr.push(convertedDate);
     }
     return lastDaysArr;
