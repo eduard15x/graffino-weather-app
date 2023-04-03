@@ -15,7 +15,7 @@ import { getCurrentDate, getConvertedDate, getLastDays } from '../utils/getDates
 import { getDayName } from '../utils/getDayName';
 import { getCitySuggestions } from '../utils/getCitySuggestions';
 
-const Home = ({secretKey}) => {
+const Home = () => {
 	// fixed variables
 	const { coords, isGeolocationAvailable, isGeolocationEnabled } =
 		useGeolocated({
@@ -39,17 +39,71 @@ const Home = ({secretKey}) => {
     const [isSearchBarVisible, setIsSearchBarVisible] = useState(false);
     const [isSettingsMenuVisibile, setIsSettingsMenuVisible] = useState(false);
 	// User selected settings
-	const [temperatureUnitMeasure, setTemperatureUnitMeasure] = useState(true);
-	const [precipitationUnitMeasure, setPrecipitationUnitMeasure] = useState(true);
-	const [windUnitMeasure, setWindUnitMeasure] = useState(true);
-	const [pressureUnitMeasure, setPressureUnitMeasure] = useState(true);
-	const [visibilityUnitMeasure, setVisibilityUnitMeasure] = useState(true);
+	const userPrefLocalStorage = JSON.parse(localStorage.getItem('userSettings'));
+	// User units measure states
+	const [temperatureUnitMeasure, setTemperatureUnitMeasure] = useState(userPrefLocalStorage !== null ? userPrefLocalStorage.temperature : true);
+	const [precipitationUnitMeasure, setPrecipitationUnitMeasure] = useState(userPrefLocalStorage !== null ? userPrefLocalStorage.precipitation : true);
+	const [windUnitMeasure, setWindUnitMeasure] = useState(userPrefLocalStorage !== null ? userPrefLocalStorage.wind : true);
+	const [pressureUnitMeasure, setPressureUnitMeasure] = useState(userPrefLocalStorage !== null ? userPrefLocalStorage.pressure : true);
+	const [visibilityUnitMeasure, setVisibilityUnitMeasure] = useState(userPrefLocalStorage !== null ? userPrefLocalStorage.visibility : true);
 	// localStorage
 	const historyArray = JSON.parse(localStorage.getItem('historyArray'));
 	const [localStorageArray, setLocalStorageArray] = useState(historyArray !== null ? historyArray : []);
 	const [currentForecastLocalStorage, setCurrentForecastLocalStorage] = useState([]);
 	// spinner state
 	const [isLoading, setIsLoading] = useState(false);
+	// user preferences
+	const unitMeasuresSwitchArray = [
+		{
+			handleSwitchChange: () => setTemperatureUnitMeasure(temperatureUnitMeasure ? false : true),
+			unitMeasure: temperatureUnitMeasure,
+			measureName: 'Temperature',
+			unitMeasureEU: '°C',
+			unitMeasureUS: '°F',
+			property: 'temperature'
+		},
+		{
+			handleSwitchChange: () => setPrecipitationUnitMeasure(precipitationUnitMeasure ? false : true),
+			unitMeasure: precipitationUnitMeasure,
+			measureName: 'Precipitation',
+			unitMeasureEU: 'in',
+			unitMeasureUS: 'mm',
+			property: 'precipitation'
+		},
+		{
+			handleSwitchChange: () => setWindUnitMeasure(windUnitMeasure ? false : true),
+			unitMeasure: windUnitMeasure,
+			measureName: 'Wind',
+			unitMeasureEU: 'kmh',
+			unitMeasureUS: 'mph',
+			property: 'wind'
+		},
+		{
+			handleSwitchChange:  () => setPressureUnitMeasure(pressureUnitMeasure ? false : true),
+			unitMeasure: pressureUnitMeasure,
+			measureName: 'Pressure',
+			unitMeasureEU: 'in',
+			unitMeasureUS: 'mb',
+			property: 'pressure'
+		},
+		{
+			handleSwitchChange: () => setVisibilityUnitMeasure(visibilityUnitMeasure ? false : true),
+			unitMeasure: visibilityUnitMeasure,
+			measureName: 'Visibility',
+			unitMeasureEU: 'km',
+			unitMeasureUS: 'miles',
+			property: 'visibility'
+		}
+	];
+	const userSettings = {
+		temperature: temperatureUnitMeasure,
+		precipitation: precipitationUnitMeasure,
+		wind: windUnitMeasure,
+		pressure: pressureUnitMeasure,
+		visibility: visibilityUnitMeasure
+	};
+	// user settings local storage
+	const userSettingsLocalStorage = userPrefLocalStorage !== null ? userPrefLocalStorage : userSettings;
 
 	const requestData = () => {
 		setIsLoading(false);
@@ -90,6 +144,9 @@ const Home = ({secretKey}) => {
 		} else {
 			setLocalStorageArray([...historyArray, e.target.getAttribute('data-city-coords')]);
 		}
+
+		localStorage.setItem('historyArray', JSON.stringify(localStorageArray));
+
 		requestDataLocalStorage();
 	};
 
@@ -120,6 +177,11 @@ const Home = ({secretKey}) => {
 		}
 	};
 
+	const updateUserSettings = (property, value) => {
+		userSettingsLocalStorage[`${property}`] = value;
+		localStorage.setItem('userSettings', JSON.stringify(userSettingsLocalStorage));
+	}
+
 	useEffect(() => {
 		if (!isCurrentLocationSet) {
 			// get current browser's location if it wasn't set already
@@ -138,51 +200,6 @@ const Home = ({secretKey}) => {
 	// eslint-disable-next-line
 	}, [coords, localStorageArray]);
 
-	const unitMeasuresSwitchArray = [
-		{
-			handleSwitchChange: () => setTemperatureUnitMeasure(temperatureUnitMeasure ? false : true),
-			unitMeasure: temperatureUnitMeasure,
-			measureName: 'Temperature',
-			unitMeasureEU: '°C',
-			unitMeasureUS: '°F',
-		},
-		{
-			handleSwitchChange: () => setPrecipitationUnitMeasure(precipitationUnitMeasure ? false : true),
-			unitMeasure: precipitationUnitMeasure,
-			measureName: 'Precipitation',
-			unitMeasureEU: 'in',
-			unitMeasureUS: 'mm',
-		},
-		{
-			handleSwitchChange: () => setWindUnitMeasure(windUnitMeasure ? false : true),
-			unitMeasure: windUnitMeasure,
-			measureName: 'Wind',
-			unitMeasureEU: 'kmh',
-			unitMeasureUS: 'mph',
-		},
-		{
-			handleSwitchChange:  () => setPressureUnitMeasure(pressureUnitMeasure ? false : true),
-			unitMeasure: pressureUnitMeasure,
-			measureName: 'Pressure',
-			unitMeasureEU: 'in',
-			unitMeasureUS: 'mb',
-		},
-		{
-			handleSwitchChange: () => setVisibilityUnitMeasure(visibilityUnitMeasure ? false : true),
-			unitMeasure: visibilityUnitMeasure,
-			measureName: 'Visibility',
-			unitMeasureEU: 'km',
-			unitMeasureUS: 'miles',
-		}
-	];
-
-	const userSettings = {
-		temperature: temperatureUnitMeasure,
-		precipitation: precipitationUnitMeasure,
-		wind: windUnitMeasure,
-		pressure: pressureUnitMeasure,
-		visibility: visibilityUnitMeasure
-	};
 
 	if (isGeolocationEnabled) {
 		if (isLoading) {
@@ -195,6 +212,7 @@ const Home = ({secretKey}) => {
 						unitMeasuresSwitchArray={unitMeasuresSwitchArray}
 						isSettingsMenuVisibile={isSettingsMenuVisibile}
 						currentForecastLocalStorage={currentForecastLocalStorage}
+						updateUserSettings={updateUserSettings}
 						/>
 						<SearchBar
 							inputValue={inputValue}

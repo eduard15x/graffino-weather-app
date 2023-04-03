@@ -23,7 +23,7 @@ const SliderCarouselPast = ({ userSettings, daysArray, getDayName }) => {
 						.sort((a, b) => b.id - a.id)
 						.map((item, index) => {
 							return (
-								<li className="forecast-list__item" key={ index }>
+								<div className="forecast-list__item" key={ index }>
 									<p className="forecast-list__item--heading">{ getDayName(item.date, 'en-US') }</p>
 									<img className="forecast-list__item--icon" src={ item.icon } alt={ item.description + ' icon' } />
 									<p className="forecast-list__item--temperature">
@@ -31,7 +31,7 @@ const SliderCarouselPast = ({ userSettings, daysArray, getDayName }) => {
 										<span>L:{ userSettings.temperature ? Math.round(item.lowestTemperatureC) : Math.round(item.lowestTemperatureF) }°</span>
 									</p>
 									<p className="forecast-list__item--condition">{ item.description }</p>
-								</li>
+								</div>
 							);
 						})
 					: ''

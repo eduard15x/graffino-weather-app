@@ -1,7 +1,8 @@
 import Switch from "react-switch";
 
 const UserSelectedSettings = ({
-    unitMeasuresSwitchArray
+    unitMeasuresSwitchArray,
+    updateUserSettings
 }) => {
 
     return (
@@ -17,11 +18,13 @@ const UserSelectedSettings = ({
                                 <Switch
                                     className="switch-btn"
                                     onChange={ item.handleSwitchChange }
+                                    onClick={updateUserSettings(item.property, item.unitMeasure)}
                                     checked={ item.unitMeasure }
                                     checkedIcon={false}
                                     uncheckedIcon={false}
                                     offColor="#2c2c2c"
                                     onColor="#2c2c2c"
+                                    data-property={item.property}
                                 />
                                 <p className={ !item.unitMeasure ? '' : 'bold' }>{ item.unitMeasureUS }</p>
                             </div>

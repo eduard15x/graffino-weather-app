@@ -10,7 +10,8 @@ const SettingsMenu = ({
     temperatureUnitMeasure,
     setTemperatureUnitMeasure,
     unitMeasuresSwitchArray,
-    currentForecastLocalStorage
+    currentForecastLocalStorage,
+    updateUserSettings
 }) => {
 
     const [isChecked, setIsChecked] = useState(false);
@@ -64,6 +65,7 @@ const SettingsMenu = ({
                     handleTemperatur={handleTemperature}
                     isChecked={isChecked}
                     unitMeasuresSwitchArray={unitMeasuresSwitchArray}
+                    updateUserSettings={updateUserSettings}
                 />
             </div>
         </div>
